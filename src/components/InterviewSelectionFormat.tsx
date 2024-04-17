@@ -1,7 +1,6 @@
 'use client'
 
 import {FC} from "react";
-import Image from "next/image";
 import {CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 import {Button} from "@/components/ui/button";
 

@@ -1,6 +1,6 @@
 'use client'
 
-import {FC, useContext, useEffect} from "react";
+import {FC, useContext} from "react";
 import {globalContext} from "@/components/GlobalContext";
 import {Button} from "@/components/ui/button";
 import {CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
@@ -13,24 +13,24 @@ export const InterviewSelectionType: FC<InterviewSelectionTypeProps> = () => {
     const {setInterviewSelectionTypeState, interviewSelectionTypeState} = useContext(globalContext);
     return (
         <div className='mt-36 ml-16'>
-            <h1 className="text-4xl mt-6">Sélection de type d'interview</h1>
+            <h1 className="text-4xl mt-6">Sélection du type d&apos;interview</h1>
             <div className='mt-36 flex flex-col gap-6 justify-center'>
                 <Button
                     className="focus-within:bg-green-400"
 
-                    onClick={ () => setInterviewSelectionTypeState("soft")}
+                    onClick={() => setInterviewSelectionTypeState("soft")}
                 >
                     Soft skills
                 </Button>
                 <Button
                     className="focus-within:bg-green-400"
-                    onClick={ () => setInterviewSelectionTypeState("hard")}
+                    onClick={() => setInterviewSelectionTypeState("hard")}
                 >
                     Hard skills
                 </Button>
                 <Button
                     className="focus-within:bg-green-400"
-                    onClick={ () => setInterviewSelectionTypeState("mix")}
+                    onClick={() => setInterviewSelectionTypeState("mix")}
                 >
                     Mixte
                 </Button>
