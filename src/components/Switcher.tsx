@@ -3,6 +3,7 @@
 import {FC, useContext} from "react";
 import {globalContext} from "@/components/GlobalContext";
 import {Welcome} from "@/components/Welcome";
+import {InterviewSelectionType} from "@/components/InterviewSelectionType";
 
 interface SwitcherProps {
 
@@ -17,7 +18,7 @@ export const Switcher: FC<SwitcherProps> = () => {
             )
         case 1:
             return (
-                <div>Step 1</div>
+                <InterviewSelectionType/>
             )
         case 2:
             return (
