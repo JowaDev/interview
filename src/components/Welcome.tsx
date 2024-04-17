@@ -10,7 +10,7 @@ interface WelcomeProps {
 }
 
 export const Welcome: FC<WelcomeProps> = () => {
-    const {componentStep, setComponentStep} = useContext(globalContext);
+    const {setWelcomeState} = useContext(globalContext);
     return (
         <div className='mt-36 ml-16 w-full'>
             <Image

@@ -2,6 +2,7 @@ import {GlobalContext} from "@/components/GlobalContext";
 import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel";
 import {Welcome} from "@/components/Welcome";
 import {InterviewSelectionFormat} from "@/components/InterviewSelectionFormat";
+import {InterviewSelectionType} from "@/components/InterviewSelectionType";
 
 export default function Home() {
     return (
@@ -14,7 +15,7 @@ export default function Home() {
                                 <Welcome/>
                             </CarouselItem>
                             <CarouselItem>
-                                ...
+                                <InterviewSelectionType/>
                             </CarouselItem>
                             <CarouselItem>
                                 <InterviewSelectionFormat/>
