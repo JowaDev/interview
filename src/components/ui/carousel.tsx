@@ -60,6 +60,7 @@ const Carousel = React.forwardRef<
             {
                 ...opts,
                 axis: orientation === "horizontal" ? "x" : "y",
+                watchDrag: false,
             },
             plugins
         )
@@ -230,8 +231,8 @@ CarouselPrevious.displayName = "CarouselPrevious"
 
 const CarouselNext = React.forwardRef<
     HTMLButtonElement,
-    React.ComponentProps<typeof Button> & { text?: string }
->(({text, className, variant = "outline", size = "icon", ...props}, ref) => {
+    React.ComponentProps<typeof Button> & { text?: string, onClick?: () => void }
+>(({text, onClick, className, variant = "outline", size = "icon", ...props}, ref) => {
     const {orientation, scrollNext, canScrollNext} = useCarousel()
 
     return (
@@ -248,7 +249,7 @@ const CarouselNext = React.forwardRef<
                 className
             )}
             disabled={!canScrollNext}
-            onClick={scrollNext}
+            onClick={onClick ? onClick : scrollNext}
             {...props}
         >
             {

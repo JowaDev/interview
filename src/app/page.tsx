@@ -20,9 +20,6 @@ export default function Home() {
                             <CarouselItem>
                                 <InterviewSelectionFormat/>
                             </CarouselItem>
-                            <CarouselItem>
-                                ...
-                            </CarouselItem>
                         </CarouselContent>
                     </Carousel>
                 </GlobalContext>

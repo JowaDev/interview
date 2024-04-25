@@ -1,8 +1,7 @@
 'use client'
 
-import {FC, useContext} from "react";
+import {FC} from "react";
 import Image from "next/image";
-import {globalContext} from "@/components/GlobalContext";
 import {CarouselNext} from "@/components/ui/carousel";
 
 interface WelcomeProps {
@@ -10,7 +9,6 @@ interface WelcomeProps {
 }
 
 export const Welcome: FC<WelcomeProps> = () => {
-    const {setWelcomeState} = useContext(globalContext);
     return (
         <div className='mt-36 ml-16 w-full'>
             <Image
