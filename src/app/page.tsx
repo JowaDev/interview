@@ -3,6 +3,8 @@ import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 import {Welcome} from "@/components/Welcome";
 import {InterviewSelectionFormat} from "@/components/InterviewSelectionFormat";
 import {InterviewSelectionType} from "@/components/InterviewSelectionType";
+import {Dropdown} from "@/components/Dropdown";
+
 
 export default function Home() {
     return (
@@ -16,6 +18,9 @@ export default function Home() {
                             </CarouselItem>
                             <CarouselItem>
                                 <InterviewSelectionType/>
+                            </CarouselItem>
+                            <CarouselItem>
+                                <Dropdown/>
                             </CarouselItem>
                             <CarouselItem>
                                 <InterviewSelectionFormat/>
