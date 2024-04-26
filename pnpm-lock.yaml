@@ -44,9 +44,9 @@ importers:
       openai:
         specifier: ^4.38.5
         version: 4.38.5(encoding@0.1.13)
-      pdf-parse-fork:
-        specifier: ^1.2.0
-        version: 1.2.0
+      pdf-parse:
+        specifier: ^1.1.1
+        version: 1.1.1
       react:
         specifier: ^18.3.0
         version: 18.3.0
@@ -1484,8 +1484,8 @@ packages:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
 
-  pdf-parse-fork@1.2.0:
-    resolution: {integrity: sha512-ovXkJaTtw8PfLNhBThKHKsZlT6WrCkVKY/QgsDK5GiD/tuL2qzezSlHpEgqHCnq3r/0GOq3NZ+won78KL/dAjQ==}
+  pdf-parse@1.1.1:
+    resolution: {integrity: sha512-v6ZJ/efsBpGrGGknjtq9J/oC8tZWq0KWL5vQrk2GlzLEQPUDB1ex+13Rmidl1neNN358Jn9EHZw5y07FFtaC7A==}
     engines: {node: '>=6.8.1'}
 
   periscopic@3.1.0:
@@ -3564,9 +3564,9 @@ snapshots:
 
   path-type@4.0.0: {}
 
-  pdf-parse-fork@1.2.0:
+  pdf-parse@1.1.1:
     dependencies:
-      debug: 4.3.4
+      debug: 3.2.7
       node-ensure: 0.0.0
     transitivePeerDependencies:
       - supports-color
