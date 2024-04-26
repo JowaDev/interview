@@ -3,7 +3,7 @@ import {Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 import {Welcome} from "@/components/Welcome";
 import {InterviewSelectionFormat} from "@/components/InterviewSelectionFormat";
 import {InterviewSelectionType} from "@/components/InterviewSelectionType";
-import {Dropdown} from "@/components/Dropdown";
+import {Dropzone} from "@/components/Dropzone";
 
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
                                 <InterviewSelectionType/>
                             </CarouselItem>
                             <CarouselItem>
-                                <Dropdown/>
+                                <Dropzone/>
                             </CarouselItem>
                             <CarouselItem>
                                 <InterviewSelectionFormat/>
