@@ -1,4 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# See https:/help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
 /node_modules
@@ -37,4 +37,37 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-whisper/
+###
+
+whisper/*.pyc
+whisper/*.egg
+whisper/!/tests/**/*.egg
+whisper/*.egg-info
+whisper/dist/*
+whisper/build
+whisper/_build
+whisper/.cache
+whisper/*.so
+whisper/venv
+whisper/pip-log.txt
+whisper/.coverage
+whisper/.pytest_cache
+whisper/.DS_Store
+whisper/.idea/*
+whisper/.python-version
+whisper/.vscode/*
+whisper/test.py
+whisper/test_*.*
+whisper/setup.cfg
+whisper/MANIFEST.in
+whisper/setup.py
+whisper/docs/site/*
+whisper/tests/fixtures/simple_project/setup.py
+whisper/tests/fixtures/project_with_extras/setup.py
+whisper/.mypy_cache
+whisper/.venv
+whisper/releases/*
+whisper/pip-wheel-metadata
+whisper/poetry.toml
+whisper/poetry/core/*
+whisper/public
