@@ -20,7 +20,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                     <Button
                         className='w-full'
                     >
-                        Interactive interview
+                        Interview interactif
                     </Button>
                 </Link>
                 <Button
