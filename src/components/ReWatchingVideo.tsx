@@ -33,7 +33,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({generatedFeedback, tr
                     <h2 className="text-xl font-semibold text-left text-[#1D2B3A] mb-2">
                         Transcription
                     </h2>
-                    <p className="prose prose-sm max-w-none">
+                    <p className="prose prose-sm max-w-none" contentEditable={true}>
                         {transcript.length > 0 ? transcript : null}
                     </p>
                 </div>

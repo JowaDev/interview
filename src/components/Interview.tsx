@@ -78,7 +78,7 @@ export const Interview: FC<InterviewProps> = () => {
         }, 1000);
     };
 
-    const handleDownload = async () => {
+    const handleTranscription = async () => {
         if (recordedChunks.length) {
             setSubmitting(true);
             setStatus("Processing");
@@ -202,7 +202,7 @@ export const Interview: FC<InterviewProps> = () => {
                     capturing={capturing}
                     handleStartCaptureClick={handleStartCaptureClick}
                     handleStopCaptureClick={handleStopCaptureClick}
-                    handleDownload={handleDownload}
+                    handleDownload={handleTranscription}
                     handleUserMedia={handleUserMedia}
                     webcamRef={webcamRef}
                     setRecordingPermission={setRecordingPermission}
