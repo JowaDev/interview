@@ -18,6 +18,12 @@ const nextConfig = {
             },
         ];
     },
+    webpack: (config, {isServer}) => {
+        if (isServer) {
+            config.externals.push('pdf.js-extract');
+        }
+        return config;
+    },
 };
 
 export default nextConfig;
