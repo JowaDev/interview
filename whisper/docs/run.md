@@ -1,6 +1,7 @@
 ## Usage
 
-Whisper ASR Webservice now available on Docker Hub. You can find the latest version of this repository on docker hub for CPU and GPU.
+Whisper ASR Webservice now available on Docker Hub. You can find the latest version of this repository on docker hub for
+CPU and GPU.
 
 Docker Hub: <https://hub.docker.com/r/onerahmet/openai-whisper-asr-webservice>
 
@@ -34,8 +35,10 @@ Docker Hub: <https://hub.docker.com/r/onerahmet/openai-whisper-asr-webservice>
 ![Swagger UI](assets/images/swagger-ui.png)
 
 ## Cache
-The ASR model is downloaded each time you start the container, using the large model this can take some time. 
-If you want to decrease the time it takes to start your container by skipping the download, you can store the cache directory (`~/.cache/whisper` or `/root/.cache/whisper`) to a persistent storage. 
+
+The ASR model is downloaded each time you start the container, using the large model this can take some time.
+If you want to decrease the time it takes to start your container by skipping the download, you can store the cache
+directory (`~/.cache/whisper` or `/root/.cache/whisper`) to a persistent storage.
 Next time you start your container the ASR Model will be taken from the cache instead of being downloaded again.
 
 **Important this will prevent you from receiving any updates to the models.**

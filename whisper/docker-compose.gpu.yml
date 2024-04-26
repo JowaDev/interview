@@ -11,7 +11,7 @@ services:
           devices:
             - driver: nvidia
               count: 1
-              capabilities: [gpu]
+              capabilities: [ gpu ]
     environment:
       - ASR_MODEL=base
     ports:

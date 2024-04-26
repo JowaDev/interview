@@ -17,7 +17,8 @@ Unreleased
 ### Changed
 
 - Upgraded
-    - [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper) to [v1.0.1](https://github.com/SYSTRAN/faster-whisper/releases/tag/v1.0.1)
+    - [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper)
+      to [v1.0.1](https://github.com/SYSTRAN/faster-whisper/releases/tag/v1.0.1)
     - fastapi to v0.110.1
     - uvicorn to v0.29.0
     - gunicorn to v21.2.0
@@ -39,8 +40,10 @@ Unreleased
 ### Changed
 
 - Upgraded
-    - [openai/whisper](https://github.com/openai/whisper) to [v20231117](https://github.com/openai/whisper/releases/tag/v20231117)
-    - [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper) to [v0.10.0](https://github.com/SYSTRAN/faster-whisper/releases/tag/v0.10.0)
+    - [openai/whisper](https://github.com/openai/whisper)
+      to [v20231117](https://github.com/openai/whisper/releases/tag/v20231117)
+    - [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper)
+      to [v0.10.0](https://github.com/SYSTRAN/faster-whisper/releases/tag/v0.10.0)
 
 [1.2.3] (2023-11-07)
 --------------------
@@ -48,7 +51,8 @@ Unreleased
 ### Changed
 
 - Upgraded
-    - [openai/whisper](https://github.com/openai/whisper) to [v20231106](https://github.com/openai/whisper/releases/tag/v20231106)
+    - [openai/whisper](https://github.com/openai/whisper)
+      to [v20231106](https://github.com/openai/whisper/releases/tag/v20231106)
 
 [1.2.2] (2023-11-03)
 --------------------
@@ -83,8 +87,10 @@ Unreleased
 ### Changed
 
 - Upgraded
-    - [openai/whisper](https://github.com/openai/whisper) to [v20230918](https://github.com/openai/whisper/releases/tag/v20230918)
-    - [guillaumekln/faster-whisper](https://github.com/guillaumekln/faster-whisper) to [v0.9.0](https://github.com/guillaumekln/faster-whisper/releases/tag/v0.9.0)
+    - [openai/whisper](https://github.com/openai/whisper)
+      to [v20230918](https://github.com/openai/whisper/releases/tag/v20230918)
+    - [guillaumekln/faster-whisper](https://github.com/guillaumekln/faster-whisper)
+      to [v0.9.0](https://github.com/guillaumekln/faster-whisper/releases/tag/v0.9.0)
 
 ### Updated
 
@@ -95,7 +101,8 @@ Unreleased
       ```bash
       docker run -d -p 9000:9000 -e ASR_MODEL_PATH=/data/whisper -v $PWD/yourlocaldir:/data/whisper onerahmet/openai-whisper-asr-webservice:latest
       ```
-- Removed the `triton` dependency from `poetry.lock` to ensure the stability of the pipeline for `ARM-based` Docker images
+- Removed the `triton` dependency from `poetry.lock` to ensure the stability of the pipeline for `ARM-based` Docker
+  images
 
 [1.1.1] (2023-05-29)
 --------------------
@@ -187,19 +194,35 @@ Unreleased
 - add language detection endpoint in #9
 
 [1.4.1]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.4.1
+
 [1.4.0]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.4.0
+
 [1.3.0]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.3.0
+
 [1.2.4]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.2.4
+
 [1.2.3]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.2.3
+
 [1.2.2]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.2.2
+
 [1.2.1]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.2.1
+
 [1.2.0]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.2.0
+
 [1.1.1]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.1.1
+
 [1.1.0]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.1.0
+
 [1.0.6]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.0.6
+
 [1.0.5]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.0.5
+
 [1.0.4]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.0.4
+
 [1.0.3-beta]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.0.3-beta
+
 [1.0.2-beta]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.0.2-beta
+
 [1.0.1-beta]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/v1.0.1-beta
+
 [1.0.0-beta]: https://github.com/ahmetoner/whisper-asr-webservice/releases/tag/1.0.0-beta

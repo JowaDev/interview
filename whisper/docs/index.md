@@ -1,6 +1,9 @@
-Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multitask model that can perform multilingual speech recognition as well as speech translation and language identification.
+Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a
+multitask model that can perform multilingual speech recognition as well as speech translation and language
+identification.
 
 ## Features
+
 Current release (v1.4.1) supports following whisper models:
 
 - [openai/whisper](https://github.com/openai/whisper)@[v20231117](https://github.com/openai/whisper/releases/tag/v20231117)
@@ -27,4 +30,5 @@ for more information:
 
 ## Credits
 
-- This software uses libraries from the [FFmpeg](http://ffmpeg.org) project under the [LGPLv2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)
+- This software uses libraries from the [FFmpeg](http://ffmpeg.org) project under
+  the [LGPLv2.1](http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html)

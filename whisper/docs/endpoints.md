@@ -1,6 +1,7 @@
 ## Quick start
 
-After running the docker image interactive Swagger API documentation is available at [localhost:9000/docs](http://localhost:9000/docs)
+After running the docker image interactive Swagger API documentation is available
+at [localhost:9000/docs](http://localhost:9000/docs)
 
 There are 2 endpoints available:
 
@@ -10,12 +11,14 @@ There are 2 endpoints available:
 ## Automatic speech recognition service /asr
 
 - 2 task choices:
-  - **transcribe**: (default) task, transcribes the uploaded file.
-  - **translate**: will provide an English transcript no matter which language was spoken.
+    - **transcribe**: (default) task, transcribes the uploaded file.
+    - **translate**: will provide an English transcript no matter which language was spoken.
 - Files are automatically converted with FFmpeg.
-  - Full list of supported [audio](https://ffmpeg.org/general.html#Audio-Codecs) and [video](https://ffmpeg.org/general.html#Video-Codecs) formats.
+    - Full list of supported [audio](https://ffmpeg.org/general.html#Audio-Codecs)
+      and [video](https://ffmpeg.org/general.html#Video-Codecs) formats.
 - You can enable word level timestamps output by `word_timestamps` parameter
-- You can Enable the voice activity detection (VAD) to filter out parts of the audio without speech  by `vad_filter` parameter (only with `Faster Whisper` for now).
+- You can Enable the voice activity detection (VAD) to filter out parts of the audio without speech by `vad_filter`
+  parameter (only with `Faster Whisper` for now).
 
 ### Request URL Query Params
 
@@ -29,6 +32,7 @@ There are 2 endpoints available:
 | encode          | true (default)                                 |
 
 Example request with cURL
+
 ```
 curl -X POST -H "content-type: multipart/form-data" -F "audio_file=@/path/to/file" 0.0.0.0:9000/asr?output=json
 ```
@@ -36,7 +40,8 @@ curl -X POST -H "content-type: multipart/form-data" -F "audio_file=@/path/to/fil
 ### Response (JSON)
 
 - **text**: Contains the full transcript
-- **segments**: Contains an entry per segment. Each entry provides `timestamps`, `transcript`, `token ids`, `word level timestamps` and other metadata
+- **segments**: Contains an entry per segment. Each entry
+  provides `timestamps`, `transcript`, `token ids`, `word level timestamps` and other metadata
 - **language**: Detected or provided language (as a language code)
 
 ## Language detection service /detect-language

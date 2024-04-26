@@ -21,7 +21,6 @@ export const Interview: FC<InterviewProps> = () => {
     const [seconds, setSeconds] = useState(0);
     const [recordingPermission, setRecordingPermission] = useState(true);
     const [cameraLoaded, setCameraLoaded] = useState(false);
-    const vidRef = useRef<HTMLVideoElement>(null);
     const [isSubmitting, setSubmitting] = useState(false);
     const [status, setStatus] = useState("Processing");
     const [isSuccess, setIsSuccess] = useState(false);
