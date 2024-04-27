@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import {ReactNode} from "react"
 import useEmblaCarousel, {type UseEmblaCarouselType,} from "embla-carousel-react"
 import {ArrowLeft, ArrowRight} from "lucide-react"
 
@@ -231,8 +232,8 @@ CarouselPrevious.displayName = "CarouselPrevious"
 
 const CarouselNext = React.forwardRef<
     HTMLButtonElement,
-    React.ComponentProps<typeof Button> & { text?: string, onClick?: () => void }
->(({text, onClick, className, variant = "outline", size = "icon", ...props}, ref) => {
+    React.ComponentProps<typeof Button> & { text?: string | ReactNode, onClick?: () => void }
+>(({children, text, onClick, className, variant = "outline", size = "icon", ...props}, ref) => {
     const {orientation, scrollNext, canScrollNext} = useCarousel()
 
     return (
@@ -253,7 +254,7 @@ const CarouselNext = React.forwardRef<
             {...props}
         >
             {
-                text ? text : (
+                children ? children : text ? text : (
                     <>
                         <ArrowRight className="h-4 w-4"/>
                         <span className="sr-only">Next slide</span>

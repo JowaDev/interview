@@ -1,4 +1,5 @@
 import {Interview} from "@/components/Interview";
+import {GlobalContext} from "@/components/GlobalContext";
 
 interface InteractIveInterviewProps {
 
@@ -6,6 +7,8 @@ interface InteractIveInterviewProps {
 
 export default function InteractIveInterviewPage(props: InteractIveInterviewProps) {
     return (
-        <Interview/>
+        <GlobalContext>
+            <Interview/>
+        </GlobalContext>
     )
 }

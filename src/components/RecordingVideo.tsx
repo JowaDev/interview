@@ -18,6 +18,8 @@ interface RecordingVideoProps {
     setRecordingPermission: (value: boolean) => void;
     loading: boolean;
     restartVideo: () => void;
+    question: string;
+    jobSelection: string;
 }
 
 export const RecordingVideo: FC<RecordingVideoProps> = ({
@@ -37,17 +39,19 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                                             setRecordingPermission,
                                                             loading,
                                                             restartVideo,
+                                                            question,
+                                                            jobSelection,
                                                         }) => {
     return (
         <div className="h-full w-full items-center flex flex-col mt-[10vh]">
+            <h1 className='text-3xl font-bold mb-14 uppercase'>{jobSelection}</h1>
             {recordingPermission ? (
                 <div className="w-full flex flex-col max-w-[1080px] mx-auto justify-center">
                     <h2 className="text-2xl font-semibold text-left text-[#1D2B3A] mb-2">
-                        La question...
+                        {question}
                     </h2>
                     <span className="text-[13px] leading-[20px] text-[#1a2b3b] font-normal mb-4">
-                        Selon les informations que vous avez fournies, nous avons préparé un ensemble de questions
-                        pour vous. Vous pouvez répondre à ces questions en enregistrant une vidéo.
+                        Selon les informations que vous avez fournies, nous avons préparé un ensemble de questions pour vous. Vous pouvez répondre à ces questions en enregistrant une vidéo.
                     </span>
                     <div
                         className="relative aspect-[16/9] w-full max-w-[1080px] overflow-hidden bg-[#1D2B3A] rounded-lg ring-1 ring-gray-900/5 shadow-md"
@@ -106,12 +110,11 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                     className="relative h-[112px] w-[112px] rounded-lg object-cover text-[2rem]">
                                     <div
                                         className="flex h-[112px] w-[112px] items-center justify-center rounded-[0.5rem] bg-[#4171d8] !text-white">
-                                        Loading...
+                                        Chargement...
                                     </div>
                                 </div>
                             </div>
                         )}
-
                         {cameraLoaded && (
                             <div
                                 className="absolute bottom-0 left-0 z-50 flex h-[82px] w-full items-center justify-center">
@@ -142,7 +145,7 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                                         onClick={() => restartVideo()}
                                                         className="group rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center bg-white text-[#1E2B3A] hover:[linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0D2247] no-underline flex gap-x-2  active:scale-95 scale-100 duration-75"
                                                     >
-                                                        Restart
+                                                        Recommencer
                                                     </button>
                                                 )}
                                                 <button
@@ -154,58 +157,58 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                                             "0px 1px 4px rgba(13, 34, 71, 0.17), inset 0px 0px 0px 1px #061530, inset 0px 0px 0px 2px rgba(255, 255, 255, 0.1)",
                                                     }}
                                                 >
-                                  <span>
-                                    {isSubmitting ? (
-                                        <div className="flex items-center justify-center gap-x-2">
-                                            <svg
-                                                className="animate-spin h-5 w-5 text-slate-50 mx-auto"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth={3}
-                                                ></circle>
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                ></path>
-                                            </svg>
-                                            <span>{status}</span>
-                                        </div>
-                                    ) : (
-                                        <div className="flex items-center justify-center gap-x-2">
-                                            <span>Process transcript</span>
-                                            <svg
-                                                className="w-5 h-5"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M13.75 6.75L19.25 12L13.75 17.25"
-                                                    stroke="white"
-                                                    strokeWidth="1.5"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                                <path
-                                                    d="M19 12H4.75"
-                                                    stroke="white"
-                                                    strokeWidth="1.5"
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                />
-                                            </svg>
-                                        </div>
-                                    )}
-                                  </span>
+                                                    <span>
+                                                      {isSubmitting ? (
+                                                          <div className="flex items-center justify-center gap-x-2">
+                                                              <svg
+                                                                  className="animate-spin h-5 w-5 text-slate-50 mx-auto"
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                                  fill="none"
+                                                                  viewBox="0 0 24 24"
+                                                              >
+                                                                  <circle
+                                                                      className="opacity-25"
+                                                                      cx="12"
+                                                                      cy="12"
+                                                                      r="10"
+                                                                      stroke="currentColor"
+                                                                      strokeWidth={3}
+                                                                  ></circle>
+                                                                  <path
+                                                                      className="opacity-75"
+                                                                      fill="currentColor"
+                                                                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                                  ></path>
+                                                              </svg>
+                                                              <span>{status}</span>
+                                                          </div>
+                                                      ) : (
+                                                          <div className="flex items-center justify-center gap-x-2">
+                                                              <span>Procéder à la transcription</span>
+                                                              <svg
+                                                                  className="w-5 h-5"
+                                                                  viewBox="0 0 24 24"
+                                                                  fill="none"
+                                                                  xmlns="http://www.w3.org/2000/svg"
+                                                              >
+                                                                  <path
+                                                                      d="M13.75 6.75L19.25 12L13.75 17.25"
+                                                                      stroke="white"
+                                                                      strokeWidth="1.5"
+                                                                      strokeLinecap="round"
+                                                                      strokeLinejoin="round"
+                                                                  />
+                                                                  <path
+                                                                      d="M19 12H4.75"
+                                                                      stroke="white"
+                                                                      strokeWidth="1.5"
+                                                                      strokeLinecap="round"
+                                                                      strokeLinejoin="round"
+                                                                  />
+                                                              </svg>
+                                                          </div>
+                                                      )}
+                                                    </span>
                                                 </button>
                                             </div>
                                         )}

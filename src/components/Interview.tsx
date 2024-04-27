@@ -1,18 +1,21 @@
 'use client'
 
-import {FC, useCallback, useEffect, useRef, useState} from "react";
+import {FC, useCallback, useContext, useEffect, useRef, useState} from "react";
 import Webcam from "react-webcam";
-import {uuid} from "uuidv4";
+import {v4 as uuid} from "uuid";
 import {ffmpeg} from "@/lib/utils";
 import {fetchFile} from "@ffmpeg/ffmpeg";
-import {ReWatchingVideo} from "@/components/ReWatchingVideo";
+import {globalContext} from "@/components/GlobalContext";
 import {RecordingVideo} from "@/components/RecordingVideo";
+import {ReWatchingVideo} from "@/components/ReWatchingVideo";
 
 interface InterviewProps {
 
 }
 
 export const Interview: FC<InterviewProps> = () => {
+    const {jobSelection, interactiveInterview} = useContext(globalContext);
+    const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(true);
     const webcamRef = useRef<Webcam | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -22,11 +25,10 @@ export const Interview: FC<InterviewProps> = () => {
     const [recordingPermission, setRecordingPermission] = useState(true);
     const [cameraLoaded, setCameraLoaded] = useState(false);
     const [isSubmitting, setSubmitting] = useState(false);
-    const [status, setStatus] = useState("Processing");
+    const [status, setStatus] = useState("Transcription en cours...");
     const [isSuccess, setIsSuccess] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [transcript, setTranscript] = useState("");
-    const [generatedFeedback, setGeneratedFeedback] = useState("");
 
     const pushRecordedChunks = useCallback(({data}: BlobEvent) => {
         if (data.size > 0) {
@@ -81,7 +83,7 @@ export const Interview: FC<InterviewProps> = () => {
     const handleTranscription = async () => {
         if (recordedChunks.length) {
             setSubmitting(true);
-            setStatus("Processing");
+            setStatus("En cours d'enregistrement...");
 
             const file = new Blob(recordedChunks, {
                 type: `video/webm`,
@@ -135,46 +137,7 @@ export const Interview: FC<InterviewProps> = () => {
                 ]).then(() => {
                     setCompleted(true);
                 });
-
-                if (results.text.length > 0) {
-                    const prompt = `Please give feedback on the following interview question: ${question} given the following transcript: ${
-                        results.text
-                    }. Please also give feedback on the candidate's communication skills. Make sure their response is structured (perhaps using the STAR or PAR frameworks)."
-                    } \n\n\ Feedback on the candidate's response:`;
-
-                    setGeneratedFeedback("");
-                    const response = await fetch("/api/generate", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            prompt,
-                        }),
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(response.statusText);
-                    }
-
-                    const data = response.body;
-                    if (!data) {
-                        return;
-                    }
-
-                    const reader = data.getReader();
-                    const decoder = new TextDecoder();
-                    let done = false;
-
-                    while (!done) {
-                        const {value, done: doneReading} = await reader.read();
-                        done = doneReading;
-                        const chunkValue = decoder.decode(value);
-                        setGeneratedFeedback((prev: any) => prev + chunkValue);
-                    }
-                }
             }
-
             setTimeout(function () {
                 setRecordedChunks([]);
             }, 1500);
@@ -186,12 +149,15 @@ export const Interview: FC<InterviewProps> = () => {
             className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
             {completed ? (
                 <ReWatchingVideo
+                    jobSelection={jobSelection}
+                    question={interactiveInterview.steps[step].question}
                     recordedChunks={recordedChunks}
                     transcript={transcript}
-                    generatedFeedback={generatedFeedback}
                 />
             ) : (
                 <RecordingVideo
+                    jobSelection={jobSelection}
+                    question={interactiveInterview.steps[step].question}
                     recordingPermission={recordingPermission}
                     cameraLoaded={cameraLoaded}
                     seconds={seconds}
