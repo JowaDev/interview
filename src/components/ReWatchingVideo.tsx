@@ -53,7 +53,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                 </video>
             </div>
             <div
-                className="mt-8 flex flex-col"
+                className="mt-8"
             >
                 <div>
                     <form onSubmit={handleSubmit}>
@@ -75,7 +75,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                         Feedback
                     </h2>
                     <div
-                        className="mt-4 text-sm flex gap-2.5 rounded-lg border border-[#EEEEEE] bg-[#FAFAFA] p-4 leading-6 text-gray-900 min-h-[100px]">
+                        className="mt-4 text-sm gap-2.5 rounded-lg border border-[#EEEEEE] bg-[#FAFAFA] p-4 leading-6 text-gray-900 min-h-[100px]">
                         {messages.map(m => (
                             <div key={m.id} className="whitespace-pre-wrap">
                                 {m.role === 'user' ? 'User: ' : 'AI: '}
