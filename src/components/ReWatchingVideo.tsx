@@ -1,31 +1,56 @@
-import {FC} from "react";
-import {useChat} from "ai/react";
+import {Dispatch, FC, SetStateAction, useEffect} from "react";
+import {Message, useChat} from "ai/react";
 import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
+import {generateId} from "ai";
+import {interactiveInterview} from "@/components/GlobalContext";
 
 interface ReWatchingVideoProps {
     recordedChunks: BlobPart[];
     transcript: string;
     question: string;
     jobSelection: string;
+    stepLength: number;
+    setStep: (step: (prevStep: number) => number) => void;
+    setInteractiveInterview: (state: (prevState: interactiveInterview) => interactiveInterview) => void
+    step: number;
+    setCompleted: (state: boolean) => void;
+    setSeconds: (state: number) => void;
+    setRecordedChunks: Dispatch<SetStateAction<Blob[]>>;
+}
+
+const scrollDownSmoothly = () => {
+    setTimeout(() => {
+        window.scroll({behavior: "smooth", top: document.body.scrollHeight});
+    }, 500);
 }
 
 export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               transcript,
                                                               recordedChunks,
                                                               question,
-                                                              jobSelection
+                                                              jobSelection,
+                                                              stepLength,
+                                                              setStep,
+                                                              setInteractiveInterview,
+                                                              step,
+                                                              setCompleted,
+                                                              setSeconds,
+                                                              setRecordedChunks
                                                           }) => {
     const {messages, input, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
         initialMessages: [
             {
-                id: "1",
+                id: generateId(),
                 role: "system",
-                content: `Tu expert en ressources humaines ainsi que du domaine suivant : ${jobSelection}. Tu es en plein job interview avec un futur collaborateur. Tu as posé la question suivante : ${question}. Assure-toi qu'il explique correctement ses pensées de manière cohérente. Assure-toi qu'il' reste sur le sujet et qu'il soit pertinente par rapport à la question. Donne un feedback mais aussi des conseils sur comment est-ce qu'il aurait pu répondre, il est tout à fait possible que la personne réponde correctement. Tu vas devoir répondre uniquement dans le format JSON. Tu vas devoir répondre comme si tu répondait directement à la personne en la vouvoyant. Voici la réponse de la personne :`
+                content: `Tu expert en ressources humaines ainsi que du domaine suivant : ${jobSelection}. Tu es en plein job interview avec un futur collaborateur. Tu as posé la question suivante : ${question}. Assure-toi qu'il explique correctement ses pensées de manière cohérente. Assure-toi qu'il' reste sur le sujet et qu'il soit pertinente par rapport à la question. Donne un feedback mais aussi des conseils sur comment est-ce qu'il aurait pu répondre, il est tout à fait possible que la personne réponde correctement. Tu vas devoir répondre uniquement dans ce format : "Feedback puis Conseils". Tu vas devoir répondre comme si tu répondait directement à la personne en la vouvoyant. Voici la réponse de la personne :`
             },
         ],
     });
+    useEffect(() => {
+        scrollDownSmoothly();
+    }, []);
     return (
         <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
             <h1 className='text-3xl text-center font-bold mb-14 uppercase'>{jobSelection}</h1>
@@ -65,25 +90,57 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                         <Button
                             type="submit"
                             className="mt-4 w-1/3 mx-auto flex items-center"
+                            onClick={scrollDownSmoothly}
                         >
-                            Confirmer
+                            {
+                                messages.length > 1 ? 'Poser une question supplémentaire' : 'Évaluer la réponse'
+                            }
                         </Button>
                     </form>
                 </div>
-                <div className="mt-8">
-                    <h2 className="text-xl font-semibold text-left text-[#1D2B3A] mb-2">
-                        Feedback
-                    </h2>
-                    <div
-                        className="mt-4 text-sm gap-2.5 rounded-lg border border-[#EEEEEE] bg-[#FAFAFA] p-4 leading-6 text-gray-900 min-h-[100px]">
-                        {messages.map(m => (
-                            <div key={m.id} className="whitespace-pre-wrap">
-                                {m.role === 'user' ? 'User: ' : 'AI: '}
-                                {m.content}
+                {
+                    messages.length > 1 && (
+                        <div className="mt-8 transition duration-300 ease-in-out">
+                            <h2 className="text-xl font-semibold text-left text-[#1D2B3A] mb-2">
+                                Feedback
+                            </h2>
+                            <div
+                                className="mt-4 text-sm gap-2.5 rounded-lg border border-[#EEEEEE] bg-[#FAFAFA] p-4 leading-6 text-gray-900 min-h-[100px]">
+                                <div className="whitespace-pre-wrap text-xl mb-6 mt-2">
+                                    {question}
+                                </div>
+                                {messages.slice(1).map((m: Message) => (
+                                    <div key={m.id} className="whitespace-pre-wrap m-6">
+                                        {m.role === 'user' ? <span className='mr-4'>Vous :</span> :
+                                            <span className='mr-4'>Expert :</span>}
+                                        {m.content}
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                </div>
+                            <div className='flex justify-end mt-4'>
+                                <Button
+                                    type="button"
+                                    className="w-1/3"
+                                    onClick={() => {
+                                        setSeconds(0);
+                                        step < stepLength && setStep(prevStep => prevStep + 1)
+                                        setRecordedChunks([]);
+                                        setInteractiveInterview(prevState => ({
+                                            ...prevState,
+                                            steps: prevState.steps.map((s, i) => i === step ? {
+                                                ...s,
+                                                answer: messages
+                                            } : s)
+                                        }));
+                                        setCompleted(false);
+                                    }}
+                                >
+                                    Question suivante
+                                </Button>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

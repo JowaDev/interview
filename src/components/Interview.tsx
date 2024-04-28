@@ -14,7 +14,7 @@ interface InterviewProps {
 }
 
 export const Interview: FC<InterviewProps> = () => {
-    const {jobSelection, interactiveInterview} = useContext(globalContext);
+    const {jobSelection, interactiveInterview, setInteractiveInterview} = useContext(globalContext);
     const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(true);
     const webcamRef = useRef<Webcam | null>(null);
@@ -54,18 +54,6 @@ export const Interview: FC<InterviewProps> = () => {
         }
         setCapturing(false);
     }, [mediaRecorderRef, setCapturing]);
-
-    useEffect(() => {
-        let timer: any = null;
-        if (capturing) {
-            timer = setInterval(() => {
-                setSeconds((seconds) => seconds + 1);
-            }, 1000);
-        }
-        return () => {
-            clearInterval(timer);
-        };
-    }, [capturing, seconds, handleStopCaptureClick]);
 
     const restartVideo = () => {
         setRecordedChunks([]);
@@ -144,6 +132,22 @@ export const Interview: FC<InterviewProps> = () => {
         }
     };
 
+    useEffect(() => {
+        let timer: any = null;
+        if (capturing) {
+            timer = setInterval(() => {
+                setSeconds((seconds) => seconds + 1);
+            }, 1000);
+        }
+        return () => {
+            clearInterval(timer);
+        };
+    }, [capturing, seconds, handleStopCaptureClick]);
+
+    useEffect(() => {
+        console.log(interactiveInterview.steps[step - 1]?.answer);
+    }, [interactiveInterview.steps, step]);
+
     return (
         <div
             className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
@@ -153,6 +157,13 @@ export const Interview: FC<InterviewProps> = () => {
                     question={interactiveInterview.steps[step].question}
                     recordedChunks={recordedChunks}
                     transcript={transcript}
+                    setStep={setStep}
+                    step={step}
+                    stepLength={interactiveInterview.steps.length}
+                    setInteractiveInterview={setInteractiveInterview}
+                    setCompleted={setCompleted}
+                    setSeconds={setSeconds}
+                    setRecordedChunks={setRecordedChunks}
                 />
             ) : (
                 <RecordingVideo
@@ -162,6 +173,7 @@ export const Interview: FC<InterviewProps> = () => {
                     cameraLoaded={cameraLoaded}
                     seconds={seconds}
                     recordedChunks={recordedChunks}
+                    step={step}
                     isSubmitting={isSubmitting}
                     status={status}
                     isSuccess={isSuccess}

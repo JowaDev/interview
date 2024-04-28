@@ -1,6 +1,7 @@
 'use client'
 
 import {createContext, FC, ReactNode, useState} from "react";
+import {Message} from "ai/react";
 
 interface content {
     skill: string;
@@ -15,7 +16,7 @@ interface interviewStep {
     fromSkill: string;
     fromKeyword: string;
     question: string;
-    answer: string;
+    answer: Message[];
 }
 
 export interface interactiveInterview {
@@ -33,7 +34,7 @@ export const globalContext = createContext({
     setSummarizeContent: (state: summarizeContent) => {
     },
     interactiveInterview: {} as interactiveInterview,
-    setInteractiveInterview: (state: interactiveInterview) => {
+    setInteractiveInterview: (state: (prevState: interactiveInterview) => interactiveInterview) => {
     },
     isLoading: false,
     setIsLoading: (state: boolean) => {
