@@ -1,4 +1,4 @@
-import {Dispatch, FC, SetStateAction, useEffect} from "react";
+import {Dispatch, FC, SetStateAction, useEffect, useRef} from "react";
 import {Message, useChat} from "ai/react";
 import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
@@ -17,6 +17,7 @@ interface ReWatchingVideoProps {
     setCompleted: (state: boolean) => void;
     setSeconds: (state: number) => void;
     setRecordedChunks: Dispatch<SetStateAction<Blob[]>>;
+    setIsSuccess: (state: boolean) => void;
 }
 
 const scrollDownSmoothly = () => {
@@ -36,8 +37,10 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               step,
                                                               setCompleted,
                                                               setSeconds,
-                                                              setRecordedChunks
+                                                              setRecordedChunks,
+                                                              setIsSuccess
                                                           }) => {
+    const inputRef = useRef(null);
     const {messages, input, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
         initialMessages: [
@@ -48,6 +51,12 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
             },
         ],
     });
+    useEffect(() => {
+        if (inputRef.current?.value) {
+            console.log('inputRef', inputRef.current.value)
+            handleInputChange({target: {value: inputRef.current.value}})
+        }
+    }, [inputRef])
     useEffect(() => {
         scrollDownSmoothly();
     }, []);
@@ -83,6 +92,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                 <div>
                     <form onSubmit={handleSubmit}>
                         <Textarea
+                            ref={inputRef}
                             onChange={handleInputChange}
                             className="prose prose-sm w-[90%] mx-auto flex items-center"
                             defaultValue={transcript}
@@ -122,9 +132,10 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                     type="button"
                                     className="w-1/3"
                                     onClick={() => {
+                                        setIsSuccess(false);
+                                        setRecordedChunks([]);
                                         setSeconds(0);
                                         step < stepLength && setStep(prevStep => prevStep + 1)
-                                        setRecordedChunks([]);
                                         setInteractiveInterview(prevState => ({
                                             ...prevState,
                                             steps: prevState.steps.map((s, i) => i === step ? {
