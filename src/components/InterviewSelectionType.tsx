@@ -29,8 +29,8 @@ export const InterviewSelectionType: FC<InterviewSelectionTypeProps> = () => {
                     Hard skills
                 </Button>
                 <Button
-                    className={clsx(interviewSelectionTypeState === "autant sur les softs que les hard skills" && "bg-green-400", 'hover:bg-green-400/90')}
-                    onClick={() => setInterviewSelectionTypeState("autant sur les softs que les hard skills")}
+                    className={clsx(interviewSelectionTypeState === "autant sur les softs que hard skills" && "bg-green-400", 'hover:bg-green-400/90')}
+                    onClick={() => setInterviewSelectionTypeState("autant sur les softs que hard skills")}
                 >
                     Mixte
                 </Button>

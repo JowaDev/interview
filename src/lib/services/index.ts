@@ -23,7 +23,8 @@ export const summarizeContentService = async (e: FormEvent<HTMLFormElement>, set
     setIsLoading(false)
 }
 
-export const generateInteractiveInterviewService = async (summarizeContent: summarizeContent, setIsLoading: (state: boolean) => void, setInteractiveInterview: (state: (prevState: interactiveInterview) => interactiveInterview) => void, jobSelection: string, interviewSelectionTypeState: string, setLocalStorageInteractiveInterview: Dispatch<SetStateAction<interactiveInterview>>): Promise<void> => {
+export const generateInteractiveInterviewService = async (summarizeContent: summarizeContent, setIsLoading: (state: boolean) => void, setInteractiveInterview: (state: (prevState: interactiveInterview) => interactiveInterview) => void, jobSelection: string, interviewSelectionTypeState: string, setLocalStorageInteractiveInterview: Dispatch<SetStateAction<interactiveInterview>>, setIsInteractiveInterview: Dispatch<SetStateAction<boolean>>): Promise<void> => {
+    setIsInteractiveInterview(true)
     setIsLoading(true)
     const globalBody = {
         jobSelection,
@@ -47,7 +48,9 @@ export const generateInteractiveInterviewService = async (summarizeContent: summ
     setIsLoading(false)
 }
 
-export const generatePDFService = async (summarizeContent: summarizeContent, jobSelection: string, interviewSelectionTypeState: string) => {
+export const generatePDFService = async (summarizeContent: summarizeContent, jobSelection: string, interviewSelectionTypeState: string, setIsLoading: (state: boolean) => void, setPdfURL: Dispatch<SetStateAction<string>>, setIsInteractiveInterview: Dispatch<SetStateAction<boolean>>) => {
+    setIsInteractiveInterview(false)
+    setIsLoading(true)
     const globalBody = {
         jobSelection,
         interviewSelectionTypeState,
@@ -69,7 +72,8 @@ export const generatePDFService = async (summarizeContent: summarizeContent, job
 
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
-        return window.open(url);
+        setIsLoading(false)
+        setPdfURL(url);
     } catch (error) {
         console.error('Failed to download PDF:', error);
     }
