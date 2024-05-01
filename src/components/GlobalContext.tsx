@@ -16,7 +16,7 @@ interface interviewStep {
     fromSkill: string;
     fromKeyword: string;
     question: string;
-    answer: Message[];
+    answer: Message[] | string;
 }
 
 export interface interactiveInterview {
