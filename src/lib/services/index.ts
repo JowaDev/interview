@@ -46,3 +46,31 @@ export const generateInteractiveInterviewService = async (summarizeContent: summ
     setLocalStorageInteractiveInterview(interview)
     setIsLoading(false)
 }
+
+export const generatePDFService = async (summarizeContent: summarizeContent, jobSelection: string, interviewSelectionTypeState: string) => {
+    const globalBody = {
+        jobSelection,
+        interviewSelectionTypeState,
+        summarizeContent
+    };
+
+    try {
+        const response = await fetch('/api/generatePDF', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(globalBody)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        return window.open(url);
+    } catch (error) {
+        console.error('Failed to download PDF:', error);
+    }
+};

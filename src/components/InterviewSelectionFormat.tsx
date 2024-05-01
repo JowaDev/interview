@@ -5,7 +5,7 @@ import {CarouselPrevious} from "@/components/ui/carousel";
 import {Button} from "@/components/ui/button";
 import {globalContext} from "@/components/GlobalContext";
 import {LoaderCircle} from "lucide-react";
-import {generateInteractiveInterviewService} from "@/lib/services";
+import {generateInteractiveInterviewService, generatePDFService} from "@/lib/services";
 import {useRouter} from "next/navigation";
 import {clsx} from "clsx";
 import {useLocalStorageInteractiveInterview} from "@/lib/hooks";
@@ -45,6 +45,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                 <Button
                     disabled={isLoading}
                     className={clsx('w-full')}
+                    onClick={() => generatePDFService(summarizeContent, jobSelection, interviewSelectionTypeState)}
                 >
                     Générer un PDF Q/A
                 </Button>
