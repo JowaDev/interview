@@ -1,9 +1,11 @@
-import {Dispatch, FC, SetStateAction, useEffect} from "react";
+import {Dispatch, FC, LegacyRef, SetStateAction} from "react";
 import {Message, useChat} from "ai/react";
 import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
 import {generateId} from "ai";
 import {interactiveInterview} from "@/components/GlobalContext";
+import {scrollDownSmoothly} from "@/lib/utils";
+import {useScrollDownSmoothly, useSyncChatInput} from "@/lib/hooks";
 
 interface ReWatchingVideoProps {
     recordedChunks: BlobPart[];
@@ -17,12 +19,7 @@ interface ReWatchingVideoProps {
     setCompleted: (state: boolean) => void;
     setSeconds: (state: number) => void;
     setRecordedChunks: Dispatch<SetStateAction<Blob[]>>;
-}
-
-const scrollDownSmoothly = () => {
-    setTimeout(() => {
-        window.scroll({behavior: "smooth", top: document.body.scrollHeight});
-    }, 500);
+    setIsSuccess: (state: boolean) => void;
 }
 
 export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
@@ -36,7 +33,8 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               step,
                                                               setCompleted,
                                                               setSeconds,
-                                                              setRecordedChunks
+                                                              setRecordedChunks,
+                                                              setIsSuccess
                                                           }) => {
     const {messages, input, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
@@ -48,9 +46,8 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
             },
         ],
     });
-    useEffect(() => {
-        scrollDownSmoothly();
-    }, []);
+    useScrollDownSmoothly()
+    const {inputRef} = useSyncChatInput(handleInputChange)
     return (
         <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
             <h1 className='text-3xl text-center font-bold mb-14 uppercase'>{jobSelection}</h1>
@@ -83,6 +80,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                 <div>
                     <form onSubmit={handleSubmit}>
                         <Textarea
+                            ref={inputRef as LegacyRef<HTMLTextAreaElement>}
                             onChange={handleInputChange}
                             className="prose prose-sm w-[90%] mx-auto flex items-center"
                             defaultValue={transcript}
@@ -122,9 +120,10 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                     type="button"
                                     className="w-1/3"
                                     onClick={() => {
+                                        setIsSuccess(false);
+                                        setRecordedChunks([]);
                                         setSeconds(0);
                                         step < stepLength && setStep(prevStep => prevStep + 1)
-                                        setRecordedChunks([]);
                                         setInteractiveInterview(prevState => ({
                                             ...prevState,
                                             steps: prevState.steps.map((s, i) => i === step ? {
