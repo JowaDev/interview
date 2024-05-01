@@ -1,11 +1,10 @@
 'use client'
 
-import {FC, useCallback, useContext, useEffect, useRef, useState} from "react";
+import {FC, useCallback, useEffect, useRef, useState} from "react";
 import Webcam from "react-webcam";
 import {v4 as uuid} from "uuid";
 import {ffmpeg} from "@/lib/utils";
 import {fetchFile} from "@ffmpeg/ffmpeg";
-import {globalContext} from "@/components/GlobalContext";
 import {RecordingVideo} from "@/components/RecordingVideo";
 import {ReWatchingVideo} from "@/components/ReWatchingVideo";
 import {useLocalStorageInteractiveInterview, useLocalStorageJobSelection} from "@/lib/hooks";
@@ -15,7 +14,6 @@ interface InterviewProps {
 }
 
 export const Interview: FC<InterviewProps> = () => {
-    const {setInteractiveInterview} = useContext(globalContext);
     const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(true);
     const webcamRef = useRef<Webcam | null>(null);
@@ -32,6 +30,7 @@ export const Interview: FC<InterviewProps> = () => {
     const [transcript, setTranscript] = useState("");
     const {
         localStorageInteractiveInterview,
+        setLocalStorageInteractiveInterview,
     } = useLocalStorageInteractiveInterview()
     const {localStorageJobSelection} = useLocalStorageJobSelection()
 
@@ -162,7 +161,7 @@ export const Interview: FC<InterviewProps> = () => {
                     setStep={setStep}
                     step={step}
                     stepLength={localStorageInteractiveInterview.steps.length}
-                    setInteractiveInterview={setInteractiveInterview}
+                    setInteractiveInterview={setLocalStorageInteractiveInterview}
                     setCompleted={setCompleted}
                     setSeconds={setSeconds}
                     setRecordedChunks={setRecordedChunks}
