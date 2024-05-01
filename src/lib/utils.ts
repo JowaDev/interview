@@ -10,3 +10,9 @@ export const ffmpeg = createFFmpeg({
     corePath: "http://localhost:3000/ffmpeg/dist/ffmpeg-core.js",
     log: true,
 });
+
+export const scrollDownSmoothly = () => {
+    setTimeout(() => {
+        window.scroll({behavior: "smooth", top: document.body.scrollHeight});
+    }, 500);
+}

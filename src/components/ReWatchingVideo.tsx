@@ -1,9 +1,11 @@
-import {Dispatch, FC, SetStateAction, useEffect, useRef} from "react";
+import {Dispatch, FC, LegacyRef, SetStateAction} from "react";
 import {Message, useChat} from "ai/react";
 import {Button} from "@/components/ui/button";
 import {Textarea} from "@/components/ui/textarea";
 import {generateId} from "ai";
 import {interactiveInterview} from "@/components/GlobalContext";
+import {scrollDownSmoothly} from "@/lib/utils";
+import {useScrollDownSmoothly, useSyncChatInput} from "@/lib/hooks";
 
 interface ReWatchingVideoProps {
     recordedChunks: BlobPart[];
@@ -20,12 +22,6 @@ interface ReWatchingVideoProps {
     setIsSuccess: (state: boolean) => void;
 }
 
-const scrollDownSmoothly = () => {
-    setTimeout(() => {
-        window.scroll({behavior: "smooth", top: document.body.scrollHeight});
-    }, 500);
-}
-
 export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               transcript,
                                                               recordedChunks,
@@ -40,7 +36,6 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               setRecordedChunks,
                                                               setIsSuccess
                                                           }) => {
-    const inputRef = useRef(null);
     const {messages, input, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
         initialMessages: [
@@ -51,15 +46,8 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
             },
         ],
     });
-    useEffect(() => {
-        if (inputRef.current?.value) {
-            console.log('inputRef', inputRef.current.value)
-            handleInputChange({target: {value: inputRef.current.value}})
-        }
-    }, [inputRef])
-    useEffect(() => {
-        scrollDownSmoothly();
-    }, []);
+    useScrollDownSmoothly()
+    const {inputRef} = useSyncChatInput(handleInputChange)
     return (
         <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
             <h1 className='text-3xl text-center font-bold mb-14 uppercase'>{jobSelection}</h1>
@@ -92,7 +80,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                 <div>
                     <form onSubmit={handleSubmit}>
                         <Textarea
-                            ref={inputRef}
+                            ref={inputRef as LegacyRef<HTMLTextAreaElement>}
                             onChange={handleInputChange}
                             className="prose prose-sm w-[90%] mx-auto flex items-center"
                             defaultValue={transcript}

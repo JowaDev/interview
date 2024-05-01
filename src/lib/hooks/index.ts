@@ -1,7 +1,8 @@
 'use client'
 
-import {useEffect, useState} from "react";
+import {ChangeEvent, MutableRefObject, useEffect, useRef, useState} from "react";
 import {interactiveInterview} from "@/components/GlobalContext";
+import {scrollDownSmoothly} from "@/lib/utils";
 
 export const useLocalStorageInteractiveInterview = () => {
     const [localStorageInteractiveInterview, setLocalStorageInteractiveInterview] = useState<interactiveInterview>({} as interactiveInterview);
@@ -37,4 +38,21 @@ export const useLocalStorageJobSelection = () => {
     }, [localStorageJobSelection])
 
     return {localStorageJobSelection, setLocalStorageJobSelection}
+}
+
+export const useSyncChatInput = (handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void) => {
+    const inputRef: MutableRefObject<HTMLTextAreaElement | undefined> = useRef(undefined);
+    useEffect(() => {
+        if (inputRef.current?.value) {
+            console.log('inputRef', inputRef.current.value)
+            handleInputChange({target: {value: inputRef.current.value}} as ChangeEvent<HTMLInputElement>)
+        }
+    }, [inputRef])
+    return {inputRef};
+}
+
+export const useScrollDownSmoothly = () => {
+    useEffect(() => {
+        scrollDownSmoothly();
+    }, []);
 }
