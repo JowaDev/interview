@@ -4,7 +4,7 @@ import {FC, useContext, useState} from "react";
 import {CarouselPrevious} from "@/components/ui/carousel";
 import {Button} from "@/components/ui/button";
 import {globalContext} from "@/components/GlobalContext";
-import {LoaderCircle} from "lucide-react";
+import {DownloadIcon, LoaderCircle} from "lucide-react";
 import {generateInteractiveInterviewService, generatePDFService} from "@/lib/services";
 import {useRouter} from "next/navigation";
 import {clsx} from "clsx";
@@ -37,21 +37,8 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
             <h1 className="text-4xl mt-6">Sélectionner le format de l&apos;interview</h1>
             <div className='mt-36 flex flex-col gap-6 justify-center'>
                 <div
-                    className='flex justify-between'
+                    className='relative flex justify-between gap-8 w-full'
                 >
-                    {
-                        localStorageInteractiveInterview.steps?.length ? (
-                            <Link
-                                href='/interactive-interview'
-                            >
-                                <Button
-                                    className='w-full bg-green-600 text-white py-2 text-center animate-pulse'
-                                >
-                                    Charger l&apos;interview interactif précédent
-                                </Button>
-                            </Link>
-                        ) : null
-                    }
                     <Button
                         className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && 'bg-green-600')}
                         onClick={() => {
@@ -63,6 +50,16 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                         {isLoading && isInteractiveInterview ?
                             <LoaderCircle className='animate-spin'/> : 'Interview interactif'}
                     </Button>
+                    {
+                        localStorageInteractiveInterview.steps?.length ? (
+                            <Link
+                                href='/interactive-interview'
+                                className='absolute right-2 flex justify-center items-center top-[50%] transform translate-y-[-50%] gap-2'
+                            >
+                                <DownloadIcon className='w-6 h-6 text-orange-300'/>
+                            </Link>
+                        ) : null
+                    }
                 </div>
                 {
                     pdfURL ? (
