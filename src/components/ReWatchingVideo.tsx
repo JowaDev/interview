@@ -20,6 +20,7 @@ interface ReWatchingVideoProps {
     setSeconds: (state: number) => void;
     setRecordedChunks: Dispatch<SetStateAction<Blob[]>>;
     setIsSuccess: (state: boolean) => void;
+    setTranscript: (state: string) => void;
 }
 
 export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
@@ -34,7 +35,8 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               setCompleted,
                                                               setSeconds,
                                                               setRecordedChunks,
-                                                              setIsSuccess
+                                                              setIsSuccess,
+                                                              setTranscript
                                                           }) => {
     const {messages, input, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
@@ -88,7 +90,10 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                         <Button
                             type="submit"
                             className="mt-4 w-1/3 mx-auto flex items-center"
-                            onClick={scrollDownSmoothly}
+                            onClick={() => {
+                                inputRef.current ? inputRef.current.value = '' : null
+                                scrollDownSmoothly()
+                            }}
                         >
                             {
                                 messages.length > 1 ? 'Poser une question supplémentaire' : 'Évaluer la réponse'
