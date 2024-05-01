@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import {interactiveInterview, summarizeContent} from "@/components/GlobalContext";
-import {FormEvent} from "react";
+import {Dispatch, FormEvent, SetStateAction} from "react";
 import Chat = OpenAI.Chat;
 import ChatCompletion = Chat.ChatCompletion;
 
@@ -23,7 +23,7 @@ export const summarizeContentService = async (e: FormEvent<HTMLFormElement>, set
     setIsLoading(false)
 }
 
-export const generateInteractiveInterviewService = async (summarizeContent: summarizeContent, setIsLoading: (state: boolean) => void, setInteractiveInterview: (state: interactiveInterview) => void, jobSelection: string, interviewSelectionTypeState: string): Promise<void> => {
+export const generateInteractiveInterviewService = async (summarizeContent: summarizeContent, setIsLoading: (state: boolean) => void, setInteractiveInterview: (state: (prevState: interactiveInterview) => interactiveInterview) => void, jobSelection: string, interviewSelectionTypeState: string, setLocalStorageInteractiveInterview: Dispatch<SetStateAction<interactiveInterview>>): Promise<void> => {
     setIsLoading(true)
     const globalBody = {
         jobSelection,
@@ -42,6 +42,7 @@ export const generateInteractiveInterviewService = async (summarizeContent: summ
     }
     const data: ChatCompletion = await response.json();
     const interview: interactiveInterview = JSON.parse(data.choices[0].message.content as string)
-    setInteractiveInterview(interview)
+    setInteractiveInterview(() => interview)
+    setLocalStorageInteractiveInterview(interview)
     setIsLoading(false)
 }

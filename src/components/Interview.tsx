@@ -8,13 +8,14 @@ import {fetchFile} from "@ffmpeg/ffmpeg";
 import {globalContext} from "@/components/GlobalContext";
 import {RecordingVideo} from "@/components/RecordingVideo";
 import {ReWatchingVideo} from "@/components/ReWatchingVideo";
+import {useLocalStorageInteractiveInterview, useLocalStorageJobSelection} from "@/lib/hooks";
 
 interface InterviewProps {
 
 }
 
 export const Interview: FC<InterviewProps> = () => {
-    const {jobSelection, interactiveInterview, setInteractiveInterview} = useContext(globalContext);
+    const {setInteractiveInterview} = useContext(globalContext);
     const [step, setStep] = useState(0);
     const [loading, setLoading] = useState(true);
     const webcamRef = useRef<Webcam | null>(null);
@@ -29,6 +30,10 @@ export const Interview: FC<InterviewProps> = () => {
     const [isSuccess, setIsSuccess] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [transcript, setTranscript] = useState("");
+    const {
+        localStorageInteractiveInterview,
+    } = useLocalStorageInteractiveInterview()
+    const {localStorageJobSelection} = useLocalStorageJobSelection()
 
     const pushRecordedChunks = useCallback(({data}: BlobEvent) => {
         if (data.size > 0) {
@@ -144,31 +149,28 @@ export const Interview: FC<InterviewProps> = () => {
         };
     }, [capturing, seconds, handleStopCaptureClick]);
 
-    useEffect(() => {
-        console.log(interactiveInterview.steps[step - 1]?.answer);
-    }, [interactiveInterview.steps, step]);
-
     return (
         <div
             className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
-            {completed ? (
+
+            {completed && localStorageInteractiveInterview.steps ? (
                 <ReWatchingVideo
-                    jobSelection={jobSelection}
-                    question={interactiveInterview.steps[step].question}
+                    jobSelection={localStorageJobSelection}
+                    question={localStorageInteractiveInterview.steps[step].question}
                     recordedChunks={recordedChunks}
                     transcript={transcript}
                     setStep={setStep}
                     step={step}
-                    stepLength={interactiveInterview.steps.length}
+                    stepLength={localStorageInteractiveInterview.steps.length}
                     setInteractiveInterview={setInteractiveInterview}
                     setCompleted={setCompleted}
                     setSeconds={setSeconds}
                     setRecordedChunks={setRecordedChunks}
                 />
-            ) : (
+            ) : localStorageInteractiveInterview.steps ? (
                 <RecordingVideo
-                    jobSelection={jobSelection}
-                    question={interactiveInterview.steps[step].question}
+                    jobSelection={localStorageJobSelection}
+                    question={localStorageInteractiveInterview.steps[step].question}
                     recordingPermission={recordingPermission}
                     cameraLoaded={cameraLoaded}
                     seconds={seconds}
@@ -187,7 +189,7 @@ export const Interview: FC<InterviewProps> = () => {
                     loading={loading}
                     restartVideo={restartVideo}
                 />
-            )}
+            ) : null}
         </div>
     )
 }

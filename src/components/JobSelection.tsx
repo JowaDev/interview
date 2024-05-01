@@ -1,9 +1,10 @@
 'use client'
 
-import {FC, useContext} from "react";
+import {FC, useContext, useEffect} from "react";
 import {CarouselNext, CarouselPrevious, useCarousel} from "@/components/ui/carousel";
 import {Input} from "@/components/ui/input";
 import {globalContext} from "@/components/GlobalContext";
+import {useLocalStorageJobSelection} from "@/lib/hooks";
 
 interface JobSelectionProps {
 
@@ -11,7 +12,11 @@ interface JobSelectionProps {
 
 export const JobSelection: FC<JobSelectionProps> = () => {
     const {jobSelection, setJobSelection} = useContext(globalContext);
+    const {setLocalStorageJobSelection} = useLocalStorageJobSelection()
     const {scrollNext} = useCarousel()
+    useEffect(() => {
+        setLocalStorageJobSelection(jobSelection)
+    }, [jobSelection])
     return (
         <div className='mt-36 ml-16'>
             <h1 className="text-4xl mt-6">Veuillez fournir le domaine, le métier spécifique ou le cursus de votre
