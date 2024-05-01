@@ -6,7 +6,6 @@ import {InterviewSelectionType} from "@/components/InterviewSelectionType";
 import {DropZone} from "@/components/DropZone";
 import {JobSelection} from "@/components/JobSelection";
 
-
 export default function Home() {
     return (
         <main className='grid grid-cols-4'>
