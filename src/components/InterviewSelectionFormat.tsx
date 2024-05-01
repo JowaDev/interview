@@ -40,7 +40,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                     className='relative flex justify-between gap-8 w-full'
                 >
                     <Button
-                        className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && 'bg-green-600')}
+                        className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && isInteractiveInterview && 'bg-green-600')}
                         onClick={() => {
                             router.prefetch('interactive-interview');
                             generateInteractiveInterviewService(summarizeContent, setIsLoading, setInteractiveInterview, jobSelection, interviewSelectionTypeState, setLocalStorageInteractiveInterview, setIsInteractiveInterview).then(() => router.push('interactive-interview'))
@@ -54,7 +54,9 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                         localStorageInteractiveInterview.steps?.length ? (
                             <Link
                                 href='/interactive-interview'
-                                className='absolute right-2 flex justify-center items-center top-[50%] transform translate-y-[-50%] gap-2'
+                                className={`absolute right-2 flex justify-center items-center top-[50%] transform translate-y-[-50%] gap-2 ${isLoading && 'pointer-events-none'}`}
+                                aria-disabled={isLoading}
+
                             >
                                 <DownloadIcon className='w-6 h-6 text-orange-300'/>
                             </Link>
@@ -74,7 +76,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                     ) : (
                         <Button
                             disabled={isLoading}
-                            className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && 'bg-green-600')}
+                            className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && !isInteractiveInterview && 'bg-green-600')}
                             onClick={() => generatePDFService(summarizeContent, jobSelection, interviewSelectionTypeState, setIsLoading, setPdfURL, setIsInteractiveInterview)}
                         >
                             {isLoading && !isInteractiveInterview ?
