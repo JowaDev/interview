@@ -1,41 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped
-with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Interview Prep for Business IT
 
-## Getting Started
+This repository contains an application designed to assist students and professionals in IT management to prepare for job interviews. The project allows users to practice answering typical interview questions categorized into three groups: soft skills, hard skills, and mixed questions.
 
-First, run the development server:
+## Project Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Current Context**
+In a competitive professional environment, preparation for interviews is crucial for success. This project provides a structured and interactive way to prepare for various aspects of an interview for an IT management position.
+
+**Objective**
+The goal of this project is to provide an interactive platform where users can practice answering interview questions, receive instant feedback, and improve their communication and technical skills.
+
+## Features
+
+- **File Loading:** Users can upload PDF files containing information on the interview module, required skills, etc.
+- **Direct Interaction Mode:** Questions are posed through an interface, and the user must respond orally. Responses are transmitted via Whisper for analysis.
+- **Revised Document Mode:** Ability to generate a PDF file containing both the questions and predefined answers for review and offline practice.
+
+## Technologies Used
+
+- **OpenAI ChatGPT:** Used to generate dynamic responses to user questions.
+- **Whisper:** Used to transcribe oral responses into text.
+- **PDFKit:** Used for creating and manipulating PDF documents.
+
+## Project Setup
+
+1. **Clone the Repository:** Clone the repository to your local machine to begin development or testing.
+2. **Install Dependencies:** Install all required dependencies using `pnpm install`.
+3. **API Configuration:** Ensure you obtain a valid OpenAI API key and place it in the `.env` file.
+
+# Environment Variable Configuration
+
+To configure the environment variables necessary for running your project, you need to create an `.env` file at the root of your project. This file should include essential configurations for integrating external services used by your application.
+
+## `.env` File Content
+
+Insert the following lines into your `.env` file, replacing placeholder values with your specific information:
+
+```plaintext
+# Endpoint for the Whisper service used for transcribing oral responses
+NEXT_PUBLIC_WHISPER_ENDPOINT=http://localhost:9000
+
+# OpenAI API key for using services such as ChatGPT
+OPENAI_API_KEY=<Your_OpenAI_API_Key>
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Starting the Project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To start the application, run the script pnpm run dev. Make sure all necessary configurations are correct.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and
-load Inter, a custom Google Font.
+## Authors
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions
-are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use
-the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Joiakim DASEK
+- Zotrim UKA
