@@ -28,6 +28,20 @@ The goal of this project is to provide an interactive platform where users can p
 2. **Install Dependencies:** Install all required dependencies using `pnpm install`.
 3. **API Configuration:** Ensure you obtain a valid OpenAI API key and place it in the `.env` file.
 
+## Starting the Project with Docker Compose
+
+### Prerequisites
+
+Ensure that you have Docker and Docker Compose installed on your machine.
+
+### Running the Application
+
+To start the application using Docker Compose, navigate to the root directory of the project and run the following command:
+
+```bash
+docker-compose up
+```
+
 # Environment Variable Configuration
 
 To configure the environment variables necessary for running your project, you need to create an `.env` file at the root of your project. This file should include essential configurations for integrating external services used by your application.
@@ -42,12 +56,15 @@ NEXT_PUBLIC_WHISPER_ENDPOINT=http://localhost:9000
 
 # OpenAI API key for using services such as ChatGPT
 OPENAI_API_KEY=<Your_OpenAI_API_Key>
-
 ```
 
 ## Starting the Project
 
-To start the application, run the script pnpm run dev. Make sure all necessary configurations are correct.
+To start the application, run the script 
+```bash
+pnpm run dev
+```
+Make sure all necessary configurations are correct.
 
 ## Authors
 
