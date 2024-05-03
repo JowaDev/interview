@@ -28,29 +28,38 @@ export async function POST(request: Request) {
         });
         const doc = new PDFDocument({margin: 40});
 
-        doc.image('public/logo/HES.png', 50, 45, {width: 50})
+        doc.image('public/logo/HES.png', 50, 45, { width: 50 })
             .fontSize(10)
-            .text(new Date().toLocaleDateString(), 200, 50, {align: 'right'});
+            .text(new Date().toLocaleDateString(), 200, 50, { align: 'right' });
 
         doc.fontSize(25)
             .text("Questions d'interview", 100, 100);
 
         doc.fontSize(15)
-            .text(`sélection d'emploi: ${jobSelection}`, 100, 150)
+            .text(`Sélection d'emploi: ${jobSelection}`, 100, 150)
             .text(`Type d'interview: ${interviewSelectionTypeState}`, 100, 180);
 
-        let yPosition = 230; // Démarre à partir de cette position pour les questions
-        const interview = JSON.parse(result.choices[0].message.content!) as interactiveInterview;
+        let yPosition = 230;
+        const interview = JSON.parse(<string>result.choices[0].message.content);
 
-        interview.steps.forEach((step, index) => {
+        interview.steps.forEach((step: { question: any; }, index: number) => {
+            if (yPosition + 20 + doc.heightOfString(step.question, { width: 400 }) > doc.page.height - doc.page.margins.bottom) {
+                doc.addPage({ margin: 40 });
+                yPosition = doc.page.margins.top;
+            }
             doc.fontSize(12).text(`Question ${index + 1}: ${step.question}`, 100, yPosition);
-            yPosition += 20 + doc.heightOfString(step.question, {width: 400}); // Augmente y selon la hauteur du texte
+            yPosition += 20 + doc.heightOfString(step.question, { width: 400 });
         });
 
         yPosition += 20; // Ajoute un espace avant de commencer les réponses
-        interview.steps.forEach((step, index) => {
+
+        interview.steps.forEach((step: { answer: any; }, index: number) => {
+            if (yPosition + 20 + doc.heightOfString(step.answer, { width: 400 }) > doc.page.height - doc.page.margins.bottom) {
+                doc.addPage({ margin: 40 });
+                yPosition = doc.page.margins.top;
+            }
             doc.fontSize(12).text(`Réponse ${index + 1}: ${step.answer}`, 100, yPosition);
-            yPosition += 20 + doc.heightOfString(step.answer, {width: 400}); // Augmente y selon la hauteur du texte
+            yPosition += 20 + doc.heightOfString(step.answer, { width: 400 });
         });
 
         doc.end();
