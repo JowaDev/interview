@@ -6,6 +6,7 @@ import {generateId} from "ai";
 import {interactiveInterview} from "@/components/GlobalContext";
 import {scrollDownSmoothly} from "@/lib/utils";
 import {useScrollDownSmoothly, useSyncChatInput} from "@/lib/hooks";
+import {useRouter} from "next/navigation";
 
 interface ReWatchingVideoProps {
     recordedChunks: BlobPart[];
@@ -44,16 +45,19 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
             {
                 id: generateId(),
                 role: "system",
-                content: `Tu expert en ressources humaines ainsi que du domaine suivant : ${jobSelection}. Tu es en plein job interview avec un futur collaborateur. Tu as posé la question suivante : ${question}. Assure-toi qu'il explique correctement ses pensées de manière cohérente. Assure-toi qu'il' reste sur le sujet et qu'il soit pertinente par rapport à la question. Donne un feedback mais aussi des conseils sur comment est-ce qu'il aurait pu répondre, il est tout à fait possible que la personne réponde correctement. Tu vas devoir répondre uniquement dans ce format : "Feedback puis Conseils". Tu vas devoir répondre comme si tu répondait directement à la personne en la vouvoyant. Voici la réponse de la personne :`
+                content: `Tu expert du domaine suivant : ${jobSelection} et aussi qualifié en tant que responsable ressource humaine. Tu es en plein job interview avec un futur collaborateur, tu fais passer un entretien d'embauche. Tu as posé la question suivante : ${question}. Assure-toi qu'il explique correctement ses pensées de manière cohérente. Assure-toi qu'il' reste sur le sujet et qu'il soit pertinente par rapport à la question. Donne un feedback mais aussi des conseils sur comment est-ce qu'il aurait pu répondre, il est tout à fait possible que la personne réponde correctement. Tu vas devoir répondre uniquement dans la structure suivante, premièrement 'Feedback' et enfin un 'Conseil'. Tu vas devoir répondre comme si tu répondait directement à la personne en la vouvoyant. Voici la réponse de la personne :`
             },
         ],
     });
     useScrollDownSmoothly()
+    const router = useRouter()
     const {inputRef} = useSyncChatInput(handleInputChange)
     return (
         <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
-            <h1 className='text-3xl text-center font-bold mb-14 uppercase'>{jobSelection}</h1>
-            <h2 className="text-2xl font-semibold text-left text-[#1D2B3A] mb-2">
+            <h1 className='text-3xl text-center font-bold uppercase'>{jobSelection}</h1>
+            <span
+                className='absolute right-[10%] border-dashed rounded-2xl border-2 p-4'>{step + 1} / {stepLength}</span>
+            <h2 className="text-2xl mt-14 font-semibold text-left text-[#1D2B3A] mb-2">
                 {question}
             </h2>
             <span className="text-[13px] leading-[20px] text-[#1a2b3b] font-normal mb-4">
@@ -128,7 +132,6 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                         setIsSuccess(false);
                                         setRecordedChunks([]);
                                         setSeconds(0);
-                                        step < stepLength && setStep(prevStep => prevStep + 1)
                                         setInteractiveInterview(prevState => ({
                                             ...prevState,
                                             steps: prevState.steps.map((s, i) => i === step ? {
@@ -136,6 +139,11 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                 answer: messages
                                             } : s)
                                         }));
+                                        if (step < stepLength - 1) {
+                                            setStep(prevStep => prevStep + 1)
+                                        } else {
+                                            router.push('/summary');
+                                        }
                                         setCompleted(false);
                                     }}
                                 >

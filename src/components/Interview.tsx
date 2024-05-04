@@ -14,7 +14,7 @@ interface InterviewProps {
 }
 
 export const Interview: FC<InterviewProps> = () => {
-    const [step, setStep] = useState(0);
+    const [step, setStep] = useState(29);
     const [loading, setLoading] = useState(true);
     const webcamRef = useRef<Webcam | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -171,6 +171,7 @@ export const Interview: FC<InterviewProps> = () => {
             ) : localStorageInteractiveInterview.steps ? (
                 <RecordingVideo
                     jobSelection={localStorageJobSelection}
+                    stepLength={localStorageInteractiveInterview.steps.length}
                     question={localStorageInteractiveInterview.steps[step].question}
                     recordingPermission={recordingPermission}
                     cameraLoaded={cameraLoaded}
