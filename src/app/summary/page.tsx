@@ -2,17 +2,8 @@
 
 import {useLocalStorageInteractiveInterview, useLocalStorageJobSelection} from "@/lib/hooks";
 import {interactiveInterview} from "@/components/GlobalContext";
-import {Message, useChat} from "ai/react";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from "@/components/ui/dialog";
-import {Button} from "@/components/ui/button";
-import {generateId} from "ai";
+import {Message} from "ai/react";
+import {LearnDeeper} from "@/components/LearnDeeper";
 
 interface SummaryProps {
 }
@@ -21,16 +12,6 @@ export default function SummaryPage(props: SummaryProps) {
     const {localStorageInteractiveInterview} = useLocalStorageInteractiveInterview();
     const {localStorageJobSelection} = useLocalStorageJobSelection();
     const interview: interactiveInterview | null = localStorageInteractiveInterview || null;
-    const {messages, input, handleInputChange, handleSubmit} = useChat({
-        api: "/api/feedback",
-        initialMessages: [
-            {
-                id: generateId(),
-                role: "system",
-                content: ``
-            },
-        ],
-    });
     return (
         <div
             className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
@@ -65,47 +46,11 @@ export default function SummaryPage(props: SummaryProps) {
                                                 </>
                                             )}
                                         </div>
-                                        <div className='flex justify-end animate-pulse'>
-                                            <Dialog>
-                                                <DialogTrigger>
-                                                    <Button>
-                                                        Je veux en savoir plus !
-                                                    </Button>
-                                                </DialogTrigger>
-                                                <DialogContent className='md:min-w-[750px]'>
-                                                    <DialogHeader>
-                                                        <DialogTitle>{step.question}</DialogTitle>
-                                                        <DialogDescription>
-                                                            Vous pouvez approfondir vos connaissances sur le sujet !
-                                                        </DialogDescription>
-                                                    </DialogHeader>
-                                                    <div
-                                                        className="grid grid-cols-2 mt-4 gap-2.5 rounded-lg border border-[#EEEEEE] bg-[#FAFAFA] p-4 leading-6 text-gray-900 min-h-[100px]">
-                                                        {messages.slice(1).map((message, index) => (
-                                                            <div key={message.id} className="col-span-2">
-                                                                <div className={index % 2 === 0 ? 'text-right' : ''}>
-                                                                    {message.role === 'user' ?
-                                                                        <span className='mr-4'>Vous :</span> :
-                                                                        <span className='mr-4'>Expert :</span>}
-                                                                    {message.content}
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                        <div className="col-span-2">
-                                                            <form onSubmit={handleSubmit}>
-                                                                <input
-                                                                    name="prompt"
-                                                                    value={input}
-                                                                    onChange={handleInputChange}
-                                                                    id="input"
-                                                                />
-                                                                <button type="submit">Submit</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </DialogContent>
-                                            </Dialog>
-                                        </div>
+                                        <LearnDeeper
+                                            step={step}
+                                            question={step.question}
+                                            jobSelection={localStorageJobSelection}
+                                        />
                                     </div>
                                 </div>
                             </div>

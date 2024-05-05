@@ -39,6 +39,9 @@ export const globalContext = createContext({
     isLoading: false,
     setIsLoading: (state: boolean) => {
     },
+    skills: [''],
+    setSkills: (state: string[]) => {
+    }
 });
 
 interface GlobalContextProps {
@@ -78,6 +81,7 @@ export const GlobalContext: FC<GlobalContextProps> = ({children}) => {
         ]
     } as summarizeContent);
     const [interactiveInterview, setInteractiveInterview] = useState<interactiveInterview>({} as interactiveInterview);
+    const [skills, setSkills] = useState<string[]>(['']);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     return (
         <globalContext.Provider value={
@@ -91,7 +95,9 @@ export const GlobalContext: FC<GlobalContextProps> = ({children}) => {
                 interactiveInterview,
                 setInteractiveInterview,
                 jobSelection,
-                setJobSelection
+                setJobSelection,
+                skills,
+                setSkills
             }
         }>
             {children}

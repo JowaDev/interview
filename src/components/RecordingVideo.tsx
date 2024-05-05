@@ -1,6 +1,9 @@
 import {FC, RefObject} from "react";
 import Webcam from "react-webcam";
 import {CircleCheckBig} from "lucide-react";
+import {QuestionSwitcher} from "@/components/QuestionSwitcher";
+import {interactiveInterview} from "@/components/GlobalContext";
+import {Message} from "ai/react";
 
 interface RecordingVideoProps {
     recordingPermission: boolean;
@@ -23,6 +26,13 @@ interface RecordingVideoProps {
     jobSelection: string;
     step: number;
     stepLength: number;
+    setStep: (step: (prevStep: number) => number) => void;
+    setInteractiveInterview: (state: (prevState: interactiveInterview) => interactiveInterview) => void
+    setCompleted: (state: boolean) => void;
+    setRecordedChunks: (state: Blob[]) => void;
+    setSeconds: (state: number) => void;
+    setIsSuccess: (state: boolean) => void;
+    messages: Message[] | string
 }
 
 export const RecordingVideo: FC<RecordingVideoProps> = ({
@@ -45,12 +55,31 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                                             restartVideo,
                                                             question,
                                                             jobSelection,
-                                                            stepLength
+                                                            stepLength,
+                                                            setStep,
+                                                            setInteractiveInterview,
+                                                            setCompleted,
+                                                            setRecordedChunks,
+                                                            setSeconds,
+                                                            setIsSuccess,
+                                                            messages
                                                         }) => {
     return (
         <div className="h-full w-full items-center flex flex-col mt-[10vh]">
             <h1 className='text-3xl font-bold uppercase'>{jobSelection}</h1>
-            <span className='absolute right-[10%] border-dashed rounded-2xl border-2 p-4'>{step + 1} / {stepLength}</span>
+            <QuestionSwitcher
+                setStep={setStep}
+                stepLength={stepLength}
+                setInteractiveInterview={setInteractiveInterview}
+                setCompleted={setCompleted}
+                setRecordedChunks={setRecordedChunks}
+                setSeconds={setSeconds}
+                setIsSuccess={setIsSuccess}
+                messages={messages}
+                step={step}
+            />
+            <span
+                className='absolute right-[10%] border-dashed rounded-2xl border-2 p-4'>{step + 1} / {stepLength}</span>
             {recordingPermission ? (
                 <div className="w-full flex flex-col max-w-[1080px] mx-auto justify-center mt-12">
                     <h2 className="text-2xl font-semibold text-left text-[#1D2B3A] mb-2">

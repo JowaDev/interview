@@ -7,14 +7,13 @@ import {ffmpeg} from "@/lib/utils";
 import {fetchFile} from "@ffmpeg/ffmpeg";
 import {RecordingVideo} from "@/components/RecordingVideo";
 import {ReWatchingVideo} from "@/components/ReWatchingVideo";
-import {useLocalStorageInteractiveInterview, useLocalStorageJobSelection} from "@/lib/hooks";
+import {useLocalStorageInteractiveInterview, useLocalStorageJobSelection, useLocalStorageStep} from "@/lib/hooks";
 
 interface InterviewProps {
 
 }
 
 export const Interview: FC<InterviewProps> = () => {
-    const [step, setStep] = useState(29);
     const [loading, setLoading] = useState(true);
     const webcamRef = useRef<Webcam | null>(null);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -33,6 +32,7 @@ export const Interview: FC<InterviewProps> = () => {
         setLocalStorageInteractiveInterview,
     } = useLocalStorageInteractiveInterview()
     const {localStorageJobSelection} = useLocalStorageJobSelection()
+    const {setLocalStorageStep, localStorageStep} = useLocalStorageStep();
 
     const pushRecordedChunks = useCallback(({data}: BlobEvent) => {
         if (data.size > 0) {
@@ -148,37 +148,37 @@ export const Interview: FC<InterviewProps> = () => {
         };
     }, [capturing, seconds, handleStopCaptureClick]);
 
-    return (
+    return (localStorageInteractiveInterview.steps && localStorageStep !== -1) && (
         <div
             className="w-full min-h-screen flex flex-col px-4 pt-2 pb-8 md:px-8 md:py-2 bg-[#FCFCFC] relative overflow-x-hidden">
-
-            {completed && localStorageInteractiveInterview.steps ? (
+            {(completed && localStorageInteractiveInterview.steps) || (localStorageInteractiveInterview.steps[localStorageStep].answer) ? (
                 <ReWatchingVideo
                     jobSelection={localStorageJobSelection}
-                    question={localStorageInteractiveInterview.steps[step].question}
+                    question={localStorageInteractiveInterview.steps[localStorageStep].question}
                     recordedChunks={recordedChunks}
                     transcript={transcript}
-                    setStep={setStep}
-                    step={step}
+                    setStep={setLocalStorageStep}
+                    step={localStorageStep}
                     stepLength={localStorageInteractiveInterview.steps.length}
                     setInteractiveInterview={setLocalStorageInteractiveInterview}
                     setCompleted={setCompleted}
                     setSeconds={setSeconds}
                     setRecordedChunks={setRecordedChunks}
                     setIsSuccess={setIsSuccess}
-                    setTranscript={setTranscript}
+                    answer={localStorageInteractiveInterview.steps[localStorageStep].answer}
                 />
             ) : localStorageInteractiveInterview.steps ? (
                 <RecordingVideo
+                    setStep={setLocalStorageStep}
                     jobSelection={localStorageJobSelection}
                     stepLength={localStorageInteractiveInterview.steps.length}
-                    question={localStorageInteractiveInterview.steps[step].question}
+                    question={localStorageInteractiveInterview.steps[localStorageStep].question}
                     recordingPermission={recordingPermission}
                     cameraLoaded={cameraLoaded}
                     seconds={seconds}
                     recordedChunks={recordedChunks}
                     isSuccess={isSuccess}
-                    step={step}
+                    step={localStorageStep}
                     isSubmitting={isSubmitting}
                     status={status}
                     capturing={capturing}
@@ -190,6 +190,12 @@ export const Interview: FC<InterviewProps> = () => {
                     setRecordingPermission={setRecordingPermission}
                     loading={loading}
                     restartVideo={restartVideo}
+                    setIsSuccess={setIsSuccess}
+                    setRecordedChunks={setRecordedChunks}
+                    messages={localStorageInteractiveInterview.steps[localStorageStep].answer}
+                    setCompleted={setCompleted}
+                    setSeconds={setSeconds}
+                    setInteractiveInterview={setLocalStorageInteractiveInterview}
                 />
             ) : null}
         </div>

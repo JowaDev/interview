@@ -40,11 +40,41 @@ export const useLocalStorageJobSelection = () => {
     return {localStorageJobSelection, setLocalStorageJobSelection}
 }
 
-export const useSyncChatInput = (handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void) => {
+export const useLocalStorageInitStep = () => {
+    useEffect(() => {
+        if (!localStorage.getItem('step'))
+            localStorage.setItem('step', '0');
+    }, []);
+}
+
+export const useLocalStorageStep = () => {
+    const [localStorageStep, setLocalStorageStep] = useState<number>(-1);
+
+    useEffect(() => {
+        if (localStorage.getItem('step') !== "-1") {
+            setLocalStorageStep(parseInt(localStorage.getItem('step') as string));
+        } else {
+            setLocalStorageStep(0);
+        }
+    }, [])
+
+    useEffect(() => {
+        if (localStorageStep !== -1) {
+            localStorage.setItem('step', localStorageStep.toString());
+        }
+    }, [localStorageStep])
+
+
+    return {localStorageStep, setLocalStorageStep}
+}
+
+export const useSyncChatInput = (handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void, step: number) => {
     const inputRef: MutableRefObject<HTMLTextAreaElement | undefined> = useRef(undefined);
     useEffect(() => {
+        handleInputChange({target: {value: ""}} as ChangeEvent<HTMLInputElement>)
+    }, [step]);
+    useEffect(() => {
         if (inputRef.current?.value) {
-            console.log('inputRef', inputRef.current.value)
             handleInputChange({target: {value: inputRef.current.value}} as ChangeEvent<HTMLInputElement>)
         }
     }, [inputRef])

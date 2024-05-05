@@ -26,7 +26,8 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
         isLoading,
         setIsLoading,
         setInteractiveInterview,
-        interactiveInterview
+        interactiveInterview,
+        skills
     } = useContext(globalContext)
     const {
         setLocalStorageInteractiveInterview,
@@ -43,7 +44,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                         className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && isInteractiveInterview && 'bg-green-600')}
                         onClick={() => {
                             router.prefetch('interactive-interview');
-                            generateInteractiveInterviewService(summarizeContent, setIsLoading, setInteractiveInterview, jobSelection, interviewSelectionTypeState, setLocalStorageInteractiveInterview, setIsInteractiveInterview).then(() => router.push('interactive-interview'))
+                            generateInteractiveInterviewService(summarizeContent, setIsLoading, setInteractiveInterview, jobSelection, interviewSelectionTypeState, setLocalStorageInteractiveInterview, setIsInteractiveInterview, skills).then(() => router.push('interactive-interview'))
                         }}
                         disabled={isLoading}
                     >

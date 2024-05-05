@@ -30,6 +30,7 @@ export default function Home() {
                 </Carousel>
             </div>
             <div className="grid-col-span-2"/>
+
         </main>
     );
 }

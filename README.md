@@ -1,6 +1,6 @@
 # Interview Preparation Application for Jobs Interview
 
-This repository contains an application designed to assist students and professionals in IT management to prepare for
+This repository contains an application designed to assist students and professionals to prepare for
 job interviews. The project allows users to practice answering typical interview questions categorized into three
 groups: soft skills, hard skills, and mixed questions.
 
@@ -8,7 +8,7 @@ groups: soft skills, hard skills, and mixed questions.
 
 **Current Context**
 In a competitive professional environment, preparation for interviews is crucial for success. This project provides a
-structured and interactive way to prepare for various aspects of an interview for an IT management position.
+structured and interactive way to prepare for various aspects of an interview.
 
 **Objective**
 The goal of this project is to provide an interactive platform where users can practice answering interview questions,
@@ -59,7 +59,7 @@ OPENAI_API_KEY=<Your_OpenAI_API_Key>
 
 ### Prerequisites
 
-Ensure that you have Docker and Docker Compose installed on your machine.
+Ensure that you have Docker Desktop installed on your machine.
 
 ### Running the Application
 
@@ -78,6 +78,7 @@ pnpm run start
 ## Credits
 
 This project was developed as part of the HEG - Business Information Technology degree programme.
+
 We drew inspiration from the [Liftoff](https://github.com/Tameyer41/liftoff) project for the audio and video
 segmentation process as well as a portion of the
 interaction logic with the video component.

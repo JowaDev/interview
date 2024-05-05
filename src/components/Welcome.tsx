@@ -3,12 +3,14 @@
 import {FC} from "react";
 import Image from "next/image";
 import {CarouselNext} from "@/components/ui/carousel";
+import {useLocalStorageInitStep} from "@/lib/hooks";
 
 interface WelcomeProps {
 
 }
 
 export const Welcome: FC<WelcomeProps> = () => {
+    useLocalStorageInitStep()
     return (
         <div className='mt-36 ml-16 w-full'>
             <Image

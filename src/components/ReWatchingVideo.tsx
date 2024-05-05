@@ -7,6 +7,7 @@ import {interactiveInterview} from "@/components/GlobalContext";
 import {scrollDownSmoothly} from "@/lib/utils";
 import {useScrollDownSmoothly, useSyncChatInput} from "@/lib/hooks";
 import {useRouter} from "next/navigation";
+import {QuestionSwitcher} from "@/components/QuestionSwitcher";
 
 interface ReWatchingVideoProps {
     recordedChunks: BlobPart[];
@@ -21,7 +22,7 @@ interface ReWatchingVideoProps {
     setSeconds: (state: number) => void;
     setRecordedChunks: Dispatch<SetStateAction<Blob[]>>;
     setIsSuccess: (state: boolean) => void;
-    setTranscript: (state: string) => void;
+    answer: Message[] | string
 }
 
 export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
@@ -37,11 +38,11 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               setSeconds,
                                                               setRecordedChunks,
                                                               setIsSuccess,
-                                                              setTranscript
+                                                              answer
                                                           }) => {
     const {messages, input, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
-        initialMessages: [
+        initialMessages: answer ? answer as Message[] : [
             {
                 id: generateId(),
                 role: "system",
@@ -51,9 +52,20 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
     });
     useScrollDownSmoothly()
     const router = useRouter()
-    const {inputRef} = useSyncChatInput(handleInputChange)
+    const {inputRef} = useSyncChatInput(handleInputChange, step)
     return (
         <div className="w-full flex flex-col max-w-[1080px] mx-auto mt-[10vh] overflow-y-auto pb-8 md:pb-12">
+            <QuestionSwitcher
+                setStep={setStep}
+                stepLength={stepLength}
+                setInteractiveInterview={setInteractiveInterview}
+                setCompleted={setCompleted}
+                setRecordedChunks={setRecordedChunks}
+                setSeconds={setSeconds}
+                setIsSuccess={setIsSuccess}
+                messages={messages}
+                step={step}
+            />
             <h1 className='text-3xl text-center font-bold uppercase'>{jobSelection}</h1>
             <span
                 className='absolute right-[10%] border-dashed rounded-2xl border-2 p-4'>{step + 1} / {stepLength}</span>
@@ -136,7 +148,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                             ...prevState,
                                             steps: prevState.steps.map((s, i) => i === step ? {
                                                 ...s,
-                                                answer: messages
+                                                answer: messages || ""
                                             } : s)
                                         }));
                                         if (step < stepLength - 1) {
@@ -147,7 +159,9 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                         setCompleted(false);
                                     }}
                                 >
-                                    Question suivante
+                                    {
+                                        step < stepLength - 1 ? 'Question suivante' : 'Terminer'
+                                    }
                                 </Button>
                             </div>
                         </div>
