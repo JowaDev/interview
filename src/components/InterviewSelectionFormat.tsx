@@ -78,7 +78,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
                         <Button
                             disabled={isLoading}
                             className={clsx('w-full', isLoading && 'cursor-not-allowed', interactiveInterview?.steps?.length && !isInteractiveInterview && 'bg-green-600')}
-                            onClick={() => generatePDFService(summarizeContent, jobSelection, interviewSelectionTypeState, setIsLoading, setPdfURL, setIsInteractiveInterview)}
+                            onClick={() => generatePDFService(summarizeContent, jobSelection, interviewSelectionTypeState, setIsLoading, setPdfURL, setIsInteractiveInterview, skills)}
                         >
                             {isLoading && !isInteractiveInterview ?
                                 <LoaderCircle className='animate-spin'/> : 'Générer un PDF Q/A'}

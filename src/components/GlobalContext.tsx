@@ -51,35 +51,7 @@ interface GlobalContextProps {
 export const GlobalContext: FC<GlobalContextProps> = ({children}) => {
     const [jobSelection, setJobSelection] = useState<string>("");
     const [interviewSelectionTypeState, setInterviewSelectionTypeState] = useState("");
-    const [summarizeContent, setSummarizeContent] = useState<summarizeContent>({
-        "results": [
-            {
-                "skill": "Compétences visées",
-                "keywords": [
-                    "différents paradigmes de programmation",
-                    "algorithmes de structures de données",
-                    "récursivité"
-                ]
-            },
-            {
-                "skill": "Contenu et formes d'enseignement",
-                "keywords": [
-                    "Paradigme objet",
-                    "Composition/Encapsulation",
-                    "Héritage",
-                    "Classes abstraites et interfaces",
-                    "Polymorphisme",
-                    "Exceptions",
-                    "Structures de données",
-                    "Algorithmique",
-                    "Récursivité",
-                    "algorithmes de tri",
-                    "Backtracking",
-                    "Heuristique"
-                ]
-            }
-        ]
-    } as summarizeContent);
+    const [summarizeContent, setSummarizeContent] = useState<summarizeContent>({} as summarizeContent);
     const [interactiveInterview, setInteractiveInterview] = useState<interactiveInterview>({} as interactiveInterview);
     const [skills, setSkills] = useState<string[]>(['']);
     const [isLoading, setIsLoading] = useState<boolean>(false);
