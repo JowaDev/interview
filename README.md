@@ -1,4 +1,4 @@
-# Interview Preparation Application for Jobs Interview
+# Interview Preparation Application for Job Interviews
 
 This repository contains an application designed to assist students and professionals to prepare for
 job interviews. The project allows users to practice answering typical interview questions categorized into three

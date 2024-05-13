@@ -1,8 +1,7 @@
 // @ts-ignore
 import PDFDocument from "pdfkit-next";
 import {openai} from "@/lib/OpenAI";
-import {interactiveInterview, summarizeContent} from "@/components/GlobalContext";
-import {text} from "node:stream/consumers";
+import {summarizeContent} from "@/components/GlobalContext";
 
 export async function POST(request: Request) {
     const {summarizeContent, interviewSelectionTypeState, jobSelection}: {
@@ -31,9 +30,9 @@ export async function POST(request: Request) {
         });
         const doc = new PDFDocument({margin: 40});
 
-        doc.image('public/logo/HES.png', 50, 45, { width: 50 })
+        doc.image('public/logo/HES.png', 50, 45, {width: 50})
             .fontSize(10)
-            .text(new Date().toLocaleDateString(), 200, 50, { align: 'right' });
+            .text(new Date().toLocaleDateString(), 200, 50, {align: 'right'});
 
         doc.fontSize(25)
             .text("Questions d'interview", 100, 100);
@@ -46,23 +45,23 @@ export async function POST(request: Request) {
         const interview = JSON.parse(<string>result.choices[0].message.content);
 
         interview.steps.forEach((step: { question: any; }, index: number) => {
-            if (yPosition + 20 + doc.heightOfString(step.question, { width: 400 }) > doc.page.height - doc.page.margins.bottom) {
-                doc.addPage({ margin: 40 });
+            if (yPosition + 20 + doc.heightOfString(step.question, {width: 400}) > doc.page.height - doc.page.margins.bottom) {
+                doc.addPage({margin: 40});
                 yPosition = doc.page.margins.top;
             }
             doc.fontSize(12).text(`Question ${index + 1}: ${step.question}`, 100, yPosition);
-            yPosition += 20 + doc.heightOfString(step.question, { width: 400 });
+            yPosition += 20 + doc.heightOfString(step.question, {width: 400});
         });
 
         yPosition += 20; // Ajoute un espace avant de commencer les réponses
 
         interview.steps.forEach((step: { answer: any; }, index: number) => {
-            if (yPosition + 20 + doc.heightOfString(step.answer, { width: 400 }) > doc.page.height - doc.page.margins.bottom) {
-                doc.addPage({ margin: 40 });
+            if (yPosition + 20 + doc.heightOfString(step.answer, {width: 400}) > doc.page.height - doc.page.margins.bottom) {
+                doc.addPage({margin: 40});
                 yPosition = doc.page.margins.top;
             }
             doc.fontSize(12).text(`Réponse ${index + 1}: ${step.answer}`, 100, yPosition);
-            yPosition += 20 + doc.heightOfString(step.answer, { width: 400 });
+            yPosition += 20 + doc.heightOfString(step.answer, {width: 400});
         });
 
         doc.end();
