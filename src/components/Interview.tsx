@@ -192,7 +192,6 @@ export const Interview: FC<InterviewProps> = () => {
                     restartVideo={restartVideo}
                     setIsSuccess={setIsSuccess}
                     setRecordedChunks={setRecordedChunks}
-                    messages={localStorageInteractiveInterview.steps[localStorageStep].answer}
                     setCompleted={setCompleted}
                     setSeconds={setSeconds}
                     setInteractiveInterview={setLocalStorageInteractiveInterview}
