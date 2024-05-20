@@ -47,8 +47,4 @@ jobs:
           context: ./whisper
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-      
-      # This step generates an artifact attestation for the image, which is an unforgeable statement about where and how it was built. It increases supply chain security for people who consume the image. For more information, see "[AUTOTITLE](/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)." 
-      - nom : générer des usages d'attestation d'artefact : actions/attest-build-provenance@v1 avec : subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}} subject-digest: ${{ steps.push.outputs.digest }} push-to-registry: vrai
-      
+          labels: ${{ steps.meta.outputs.labels }} 
