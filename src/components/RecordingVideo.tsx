@@ -3,7 +3,6 @@ import Webcam from "react-webcam";
 import {CircleCheckBig} from "lucide-react";
 import {QuestionSwitcher} from "@/components/QuestionSwitcher";
 import {interactiveInterview} from "@/components/GlobalContext";
-import {Message} from "ai/react";
 
 interface RecordingVideoProps {
     recordingPermission: boolean;
@@ -32,7 +31,6 @@ interface RecordingVideoProps {
     setRecordedChunks: (state: Blob[]) => void;
     setSeconds: (state: number) => void;
     setIsSuccess: (state: boolean) => void;
-    messages: Message[] | string
 }
 
 export const RecordingVideo: FC<RecordingVideoProps> = ({
@@ -62,7 +60,6 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                                             setRecordedChunks,
                                                             setSeconds,
                                                             setIsSuccess,
-                                                            messages
                                                         }) => {
     return (
         <div className="h-full w-full items-center flex flex-col mt-[10vh]">
@@ -75,7 +72,6 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                 setRecordedChunks={setRecordedChunks}
                 setSeconds={setSeconds}
                 setIsSuccess={setIsSuccess}
-                messages={messages}
                 step={step}
             />
             <span
@@ -133,7 +129,7 @@ export const RecordingVideo: FC<RecordingVideoProps> = ({
                                 ref={webcamRef}
                                 videoConstraints={{width: 1280, height: 720, facingMode: "user"}}
                                 onUserMedia={handleUserMedia}
-                                onUserMediaError={(error) => {
+                                onUserMediaError={() => {
                                     setRecordingPermission(false);
                                 }}
                                 className="absolute z-10 min-h-[100%] min-w-[100%] h-auto w-auto object-cover"

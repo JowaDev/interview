@@ -2,7 +2,6 @@ import {FC} from "react";
 import {switchQuestion} from "@/lib/utils";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {interactiveInterview} from "@/components/GlobalContext";
-import {Message} from "ai/react";
 
 interface QuestionSwitcherProps {
     setStep: (step: (prevStep: number) => number) => void;
@@ -13,7 +12,6 @@ interface QuestionSwitcherProps {
     setRecordedChunks: (state: Blob[]) => void;
     setSeconds: (state: number) => void;
     setIsSuccess: (state: boolean) => void;
-    messages: Message[] | string
 }
 
 export const QuestionSwitcher: FC<QuestionSwitcherProps> = (
@@ -26,7 +24,6 @@ export const QuestionSwitcher: FC<QuestionSwitcherProps> = (
         setRecordedChunks,
         setSeconds,
         setIsSuccess,
-        messages
     }
 ) => {
     return (
@@ -40,7 +37,6 @@ export const QuestionSwitcher: FC<QuestionSwitcherProps> = (
                 setRecordedChunks,
                 setSeconds,
                 setIsSuccess,
-                messages
             )}
             defaultValue={(step + 1).toString()}
         >

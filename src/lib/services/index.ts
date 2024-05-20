@@ -44,8 +44,8 @@ export const generateInteractiveInterviewService = async (summarizeContent: summ
     }
     const data: ChatCompletion = await response.json();
     const interview: interactiveInterview = JSON.parse(data.choices[0].message.content as string)
-    setInteractiveInterview(() => interview)
     setLocalStorageInteractiveInterview(interview)
+    setInteractiveInterview(() => interview)
     setIsLoading(false)
 }
 

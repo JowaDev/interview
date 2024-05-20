@@ -40,7 +40,7 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                                                               setIsSuccess,
                                                               answer
                                                           }) => {
-    const {messages, input, handleInputChange, handleSubmit} = useChat({
+    const {messages, handleInputChange, handleSubmit} = useChat({
         api: "/api/feedback",
         initialMessages: answer ? answer as Message[] : [
             {
@@ -63,7 +63,6 @@ export const ReWatchingVideo: FC<ReWatchingVideoProps> = ({
                 setRecordedChunks={setRecordedChunks}
                 setSeconds={setSeconds}
                 setIsSuccess={setIsSuccess}
-                messages={messages}
                 step={step}
             />
             <h1 className='text-3xl text-center font-bold uppercase'>{jobSelection}</h1>
