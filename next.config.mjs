@@ -1,3 +1,4 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: true,
     async headers() {
@@ -21,11 +22,6 @@ const nextConfig = {
         if (isServer) {
             config.externals.push('pdfkit-next');
             config.externals.push('pdf.js-extract');
-        } else {
-            config.module.rules.push({
-                test: /pdf\.worker\.js$/,
-                use: {loader: 'file-loader'},
-            });
         }
         return config;
     },
