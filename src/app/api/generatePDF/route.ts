@@ -1,5 +1,5 @@
 // @ts-ignore
-import PDFDocument from "pdfkit-next";
+import PDFDocument from "pdfkit-next/js/pdfkit.esnext";
 import {openai} from "@/lib/OpenAI";
 import {summarizeContent} from "@/components/GlobalContext";
 
