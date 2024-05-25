@@ -21,7 +21,6 @@ const nextConfig = {
     webpack: (config, {isServer}) => {
         if (isServer) {
             config.externals.push('pdfkit-next');
-            config.externals.push('pdf.js-extract');
         }
         return config;
     },
