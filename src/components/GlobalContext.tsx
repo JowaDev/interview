@@ -12,7 +12,7 @@ export interface summarizeContent {
     results: content[];
 }
 
-interface interviewStep {
+export interface interviewStep {
     fromSkill: string;
     fromKeyword: string;
     question: string;
