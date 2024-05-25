@@ -34,7 +34,7 @@ export const InterviewSelectionFormat: FC<InterviewSelectionFormatProps> = () =>
         localStorageInteractiveInterview
     } = useLocalStorageInteractiveInterview()
     return (
-        <div className='mt-36 ml-16'>
+        <div className='mt-36 mx-16'>
             <h1 className="text-4xl mt-6">Sélectionner le format de l&apos;interview</h1>
             <div className='mt-36 flex flex-col gap-6 justify-center'>
                 <div

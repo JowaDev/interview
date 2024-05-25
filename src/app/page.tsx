@@ -8,7 +8,7 @@ import {JobSelection} from "@/components/JobSelection";
 export default function Home() {
     return (
         <main className='grid grid-cols-4'>
-            <div className="col-span-2">
+            <div className="col-span-4 lg:col-span-2">
                 <Carousel>
                     <CarouselContent>
                         <CarouselItem>

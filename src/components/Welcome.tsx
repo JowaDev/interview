@@ -12,7 +12,7 @@ interface WelcomeProps {
 export const Welcome: FC<WelcomeProps> = () => {
     useLocalStorageInitStep()
     return (
-        <div className='mt-36 ml-16 w-full'>
+        <div className='mt-36 mx-16 w-full'>
             <Image
                 src="/logo/HES.png"
                 alt="HES Logo"

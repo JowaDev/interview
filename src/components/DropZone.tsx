@@ -25,7 +25,7 @@ export const DropZone: FC<DropZoneProps> = () => {
     } = useContext(globalContext);
     const [isDropZone, setIsDropZone] = useState(true);
     return (
-        <div className='mt-36 ml-16'>
+        <div className='mt-36 mx-16'>
             <div className='flex items-baseline justify-between'>
                 <h1 className="text-4xl mt-6">
                     {isDropZone ? 'Déposez un fichier' : 'Remplir manuellement'}
