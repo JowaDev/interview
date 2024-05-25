@@ -5,9 +5,7 @@ import {dropZonePrompt, skillsPrompt} from "@/lib/prompts";
 
 export const dynamic = 'force-dynamic';
 
-export const config = {
-    maxDuration: 60
-}
+export const maxDuration = 60
 
 export async function POST(request: Request) {
     const {summarizeContent, interviewSelectionTypeState, jobSelection, skills}: {
