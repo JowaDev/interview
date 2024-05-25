@@ -4,6 +4,9 @@ import {interactiveInterview, summarizeContent} from "@/components/GlobalContext
 import {openai} from "@/lib/OpenAI";
 import {dropZonePrompt, skillsPrompt} from "@/lib/prompts";
 
+export const maxDuration = 30;
+export const dynamic = 'force-dynamic';
+
 export async function POST(request: Request) {
     const {summarizeContent, interviewSelectionTypeState, jobSelection, skills}: {
         summarizeContent: summarizeContent,
