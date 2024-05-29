@@ -4,6 +4,7 @@ import OpenAI from "openai";
 import {dropZonePrompt, skillsPrompt} from "@/lib/prompts";
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
     const {summarizeContent, interviewSelectionTypeState, jobSelection, skills}: {
@@ -20,11 +21,11 @@ export async function POST(request: Request) {
             messages: [
                 {
                     role: 'system',
-                    content: summarizeContent.results?.length ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState)
+                    content: summarizeContent?.results?.length ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState)
                 },
                 {
                     role: 'user',
-                    content: summarizeContent.results?.length ? JSON.stringify(summarizeContent) : skills.join(', ')
+                    content: summarizeContent?.results?.length ? JSON.stringify(summarizeContent) : skills.join(', ')
                 }
             ],
         })

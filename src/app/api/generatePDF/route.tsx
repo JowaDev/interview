@@ -22,11 +22,11 @@ export async function POST(request: Request) {
             messages: [
                 {
                     role: 'system',
-                    content: summarizeContent.results?.length ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState, true)
+                    content: summarizeContent?.results?.length ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState, true)
                 },
                 {
                     role: 'user',
-                    content: JSON.stringify(summarizeContent)
+                    content: summarizeContent?.results?.length ? JSON.stringify(summarizeContent) : skills.join(', ')
                 }
             ],
         });
