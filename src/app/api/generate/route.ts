@@ -20,11 +20,11 @@ export async function POST(request: Request) {
             messages: [
                 {
                     role: 'system',
-                    content: summarizeContent.results.length > 0 ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState)
+                    content: summarizeContent.results?.length ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState)
                 },
                 {
                     role: 'user',
-                    content: summarizeContent.results.length > 0 ? JSON.stringify(summarizeContent) : skills.join(', ')
+                    content: summarizeContent.results?.length ? JSON.stringify(summarizeContent) : skills.join(', ')
                 }
             ],
         })

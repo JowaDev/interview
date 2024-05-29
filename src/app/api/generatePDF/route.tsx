@@ -22,7 +22,7 @@ export async function POST(request: Request) {
             messages: [
                 {
                     role: 'system',
-                    content: skills.length > 1 ? skillsPrompt(jobSelection, interviewSelectionTypeState, true) : dropZonePrompt(jobSelection, interviewSelectionTypeState, true)
+                    content: summarizeContent.results?.length ? dropZonePrompt(jobSelection, interviewSelectionTypeState) : skillsPrompt(jobSelection, interviewSelectionTypeState, true)
                 },
                 {
                     role: 'user',
