@@ -13,7 +13,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
     title: "Jobs Interview",
-    description: "This WebAp will help you to prepare for your next job interview",
+    description: "This Web Application will help you to prepare for your next job interview",
 };
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
         </body>
         <Script
             defer
-            src="https://cloud.umami.is/script.js"
+            src="@/lib/umami"
             data-website-id="7700196b-0e3a-4442-9c8e-39ae9d64dfe4"
         />
         </html>
